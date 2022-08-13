@@ -1,0 +1,14 @@
+sort:
+	unknown: default/img/unknown.png
+	单手剑: default/img/单手剑.png
+	大剑: default/img/大剑.png
+	弓: default/img/弓.png
+	枪: default/img/枪.png
+	法器: default/img/法器.png
+	水: default/img/水.png
+	冰: default/img/冰.png
+	岩: default/img/岩.png
+	火: default/img/火.png
+	草: default/img/草.png
+	风: default/img/风.png
+	雷: default/img/雷.png

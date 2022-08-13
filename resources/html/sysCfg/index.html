@@ -1,0 +1,165 @@
+{{extend defaultLayout}}
+
+{{block 'css'}}
+
+<link rel="stylesheet" type="text/css" href="{{pluResPath}}html/sysCfg/index.css" />
+<style>
+	.container {
+		background: url("{{pluResPath}}img/admin/bg.png") #000144  top  !important;
+		background-size: 520px auto;
+		width: 520px;
+	}
+</style>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+	<div class="head-box type{{bgType}}">
+		<div class="label">抽卡插件</div>
+		<div class="title">自定义抽卡管理面板</div>
+	</div>
+</div>
+<div class="cfg-box">
+  <div class="cfg-group">插件设置</div>
+  <ul class="cfg-ul">
+    <li class="cfg-li">
+      <div class="cfg-line">
+        自定义开启
+        <span class="cfg-hint"> #抽卡设置自定义+开启/关闭</span>
+        {{@gachadiy}}
+      </div>
+	    <div class="cfg-desc">覆盖机器人本身的抽卡功能</div>
+    </li>
+    <li class="cfg-li">
+      <div class="cfg-line">
+        转生间隔
+        <span class="cfg-hint"> #抽卡设置转生间隔120</span>
+        <div class="cfg-status">{{@relifetime}}</div>
+      </div>
+      <div class="cfg-desc">默认单位分钟</div>
+    </li>
+  </ul>
+</div>
+<div class="cfg-box">
+  <div class="cfg-group">概率设置</div>
+  <ul class="cfg-ul">
+
+    <li class="cfg-li">
+      <div class="cfg-line">
+        五星角色概率
+        <span class="cfg-hint"> #抽卡设置五星角色概率60</span>
+        <div class="cfg-status">{{@gachacharact5}}</div>
+      </div>
+      <div class="cfg-desc">设置五星角色的出货概率，0-10000</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line">
+        四星角色概率
+        <span class="cfg-hint"> #抽卡设置四星角色概率510</span>
+        <div class="cfg-status">{{@gachacharact4}}</div>
+      </div>
+      <div class="cfg-desc">设置四星角色的出货概率</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line">
+        五星武器概率
+        <span class="cfg-hint"> #抽卡设置五星武器概率70</span>
+        <div class="cfg-status">{{@gachaweapon5}}</div>
+      </div>
+      <div class="cfg-desc">设置五星武器的出货概率</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line">
+        四星武器概率
+        <span class="cfg-hint"> #抽卡设置四星武器概率600</span>
+        <div class="cfg-status">{{@gachaweapon4}}</div>
+      </div>
+      <div class="cfg-desc">设置四星武器的出货概率</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line">
+        小保底必中概率
+        <span class="cfg-hint"> #抽卡设置小保底概率50</span>
+        <div class="cfg-status">{{@gachawai}}</div>
+      </div>
+      <div class="cfg-desc">设置角色小保底的出货概率，0-100</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line">
+        概率复位
+        <span class="cfg-hint"> #抽卡设置概率复位</span>
+        <div class="cfg-status">{{@gachaconfigchance}}</div>
+      </div>
+      <div class="cfg-desc">将概率恢复默认概率</div>
+    </li>
+
+  </ul>
+</div>
+
+
+<div class="cfg-box">
+  <div class="cfg-group">原神卡池设置</div>
+  <ul class="cfg-ul">
+
+    <li class="cfg-li">
+      <div class="cfg-line-no-status">
+        祈愿五星角色
+        <span class="cfg-hint">#抽卡设置五星角色万叶,可莉</span>
+        <div class="cfg-status"></div>
+      </div>
+      <div class="cfg-desc">设置卡池五星角色,当前角色:{{@genshincharact5}}</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line-no-status">
+        祈愿四星角色
+        <span class="cfg-hint">#抽卡设置四星角色早柚,雷泽,行秋</span>
+        <div class="cfg-status"></div>
+      </div>
+      <div class="cfg-desc">设置卡池四星角色,当前角色:{{@genshincharact4}}</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line-no-status">
+        祈愿五星武器
+        <span class="cfg-hint">#抽卡设置五星武器苍古自由之誓,四风原典</span>
+        <div class="cfg-status"></div>
+      </div>
+      <div class="cfg-desc">设置卡池五星武器,不允许输入别名,当前武器:{{@genshinweapon5}}</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line-no-status">
+        祈愿四星武器
+        <span class="cfg-hint"> #抽卡设置四星武器+武器列表</span>
+        <div class="cfg-status"></div>
+      </div>
+      <div class="cfg-desc">设置卡池五星武器,当前武器:{{@genshinweapon4}}</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line-no-status">
+        随机卡池
+        <span class="cfg-hint"> #抽卡设置随机卡池</span>
+        <div class="cfg-status"></div>
+      </div>
+      <div class="cfg-desc">随机生成角色卡池</div>
+    </li>
+
+    <li class="cfg-li">
+      <div class="cfg-line-no-status">
+        卡池同步
+        <span class="cfg-hint"> #抽卡设置卡池同步</span>
+        <div class="cfg-status"></div>
+      </div>
+      <div class="cfg-desc">同步机器人原生卡池</div>
+    </li>
+
+  </ul>
+</div>
+{{/block}}

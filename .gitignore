@@ -1,0 +1,5 @@
+*.psd
+.idea
+/components/cfg.json
+*.css.map
+/config/*.yaml
