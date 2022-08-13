@@ -146,10 +146,8 @@ export class gacha extends plugin {
   async init () {
     await GachaData.getStr()
 
-    let file = './plugins/flower-plugin/config/gacha.set.yaml'
+    if (fs.existsSync(process.cwd().replace(/\\/g, '/') + '/plugins/flower-plugin/config/gacha.set.yaml')) return
 
-    if (fs.existsSync(file)) return
-
-    fs.copyFileSync('./plugins/flower-plugin/defSet/gacha/set.yaml', file)
+    fs.copyFileSync(process.cwd().replace(/\\/g, '/') + '/plugins/flower-plugin/defSet/gacha/set.yaml', './plugins/flower-plugin/config/gacha.set.yaml')
   }
 }
