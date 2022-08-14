@@ -75,7 +75,7 @@ export default class GachaData extends base {
 
   /** 奖池数据 */
   async getPool () {
-    let NowPool = gsCfg.getYaml('gacha', 'pool', 'config')
+    let NowPool = gsCfg.getPool()
     /** 获取设置卡池 */
     this.NowPool = NowPool
 

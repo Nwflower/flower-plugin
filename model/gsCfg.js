@@ -165,6 +165,18 @@ class GsCfg {
       }
     }
   }
+
+  /** 获取卡池 */
+  getPool () {
+    let app = 'gacha'; let name = 'pool'
+    if (!fs.existsSync(`${this.configPath}${app}.${name}.yaml`)) {
+      let allPool = YAML.parse(fs.readFileSync(`${this.defSetPath}${app}/${name}.yaml`, 'utf8'))
+      fs.writeFileSync(`${this.configPath}${app}.${name}.yaml`, YAML.stringify(allPool[0], null, '\t'))
+      return allPool[0]
+    } else {
+      return YAML.parse(fs.readFileSync(`${this.configPath}${app}.${name}.yaml`, 'utf8'))
+    }
+  }
 }
 
 export default new GsCfg()
