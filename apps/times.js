@@ -54,6 +54,9 @@ export class times extends plugin {
 
     if (e.isGroup) {
       let set = gsCfg.getGachaSet(this.e.group_id)
+      if (groupset[ob] === undefined) {
+        groupset[ob] = set
+      }
       if (groupset[ob].count === undefined) {
         groupset[ob].count = set.count
       }
