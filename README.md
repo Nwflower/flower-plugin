@@ -1,6 +1,7 @@
 # 抽卡插件flower-plugin
 ### 介绍
 Yunzai-Bot V3 的插件包，主要提供拓展抽卡功能，旨在不修改原卡池信息的情况下提供自定义卡池的拓展
+如果你在找适用于V2版本的插件包，请点击
 [适用于V2版本的抽卡插件](https://gitee.com/Nwflower/gacha-plugin)
 
 ### 已经实现的功能
