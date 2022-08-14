@@ -60,7 +60,7 @@ export class admin extends plugin {
   }
 
   async sysCfg (e) {
-    if (!await checkAuth(e)) {
+    if (!e.isMaster) {
       return true
     }
     let cfgReg = new RegExp(sysCfgReg)
@@ -257,7 +257,7 @@ export class admin extends plugin {
   }
 
   async updateGachaPlugin (e) {
-    if (!await checkAuth(e)) {
+    if (!e.isMaster) {
       return true
     }
     let isForce = e.msg.includes('强制')
@@ -303,10 +303,6 @@ export class admin extends plugin {
     })
     return true
   }
-}
-
-async function checkAuth (e) {
-  return e.isMaster
 }
 
 const getName = function (genshinname) {

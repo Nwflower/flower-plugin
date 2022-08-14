@@ -27,6 +27,7 @@ export default class GachaData extends base {
 
     this.fiveHave = []
     this.fourHave = []
+    this.bailian = true
   }
 
   static async init (e) {
@@ -42,7 +43,8 @@ export default class GachaData extends base {
   }
 
   /** 抽卡 */
-  async run () {
+  async run (type = true) {
+    if (!type) this.bailian = false
     this.res = []
     let list = this.lottery()
 
@@ -170,14 +172,15 @@ export default class GachaData extends base {
    */
   lottery (save = true) {
     /** 十连抽 */
+    if (this.type == 'weapon') {
+      this.user.today.weaponNum++
+      if (this.bailian) this.user.today.weaponNum += 9
+    } else {
+      this.user.today.num++
+      if (this.bailian) this.user.today.num += 9
+    }
     for (let i = 1; i <= 10; i++) {
       this.index = i
-
-      if (this.type == 'weapon') {
-        this.user.today.weaponNum++
-      } else {
-        this.user.today.num++
-      }
 
       if (this.lottery5()) continue
 

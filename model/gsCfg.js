@@ -16,7 +16,7 @@ class GsCfg {
     /** 监听文件 */
     this.watcher = { config: {}, defSet: {} }
 
-    this.ignore = ['gacha.gacha', 'gacha.set']
+    this.ignore = ['gacha.gacha', 'gacha.set', 'gacha.pool', 'gacha.random']
   }
 
   /**
@@ -65,7 +65,7 @@ class GsCfg {
     if (type === 'defSet') return `${this.defSetPath}${app}/${name}.yaml`
     else {
       try {
-        if (!fs.existsSync(`${this.configPath}${app}.${name}.yaml`)) {
+        if (!fs.existsSync(`${this.configPath}${app}.${name}.yaml`) && this.ignore.includes(`${app}.${name}`)) {
           fs.writeFileSync(`${this.configPath}${app}.${name}.yaml`, fs.readFileSync(`${this.defSetPath}${app}/${name}.yaml`, 'utf8'))
         }
       } catch (error) {

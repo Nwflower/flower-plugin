@@ -45,7 +45,7 @@ export class gacha extends plugin {
     } else {
       let datas = []; let all5 = 0; let all4 = 0; let imgs = []; let w; let imgss = []
       for (let i = 1; i <= 10; i++) {
-        datas[i] = await this.GachaData.run()
+        datas[i] = await this.GachaData.run(this.GachaData.set.tenGacha === 1)
         // eslint-disable-next-line no-unused-vars
         all5 += datas[i].nowFive
         // eslint-disable-next-line no-unused-vars
