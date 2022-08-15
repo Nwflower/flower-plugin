@@ -54,6 +54,7 @@ export class Mypool extends plugin {
     if (regRet[1]) {
       let val = regRet[2] || ''
       let cfgKey = cfgMap[regRet[1]]
+      if (!cfgKey) cfgKey = 'pool.all'
       switch (cfgKey) {
         case 'pool.c5' :
           // eslint-disable-next-line no-case-declarations
