@@ -13,6 +13,10 @@ class GsCfg {
     this.configPath = './plugins/flower-plugin/config/'
     this.config = {}
 
+    /** 用户数据 */
+    this.dataPath = './plugins/flower-plugin/data/'
+    this.data = {}
+
     /** 监听文件 */
     this.watcher = { config: {}, defSet: {} }
 
@@ -176,6 +180,25 @@ class GsCfg {
     } else {
       return YAML.parse(fs.readFileSync(`${this.configPath}${app}.${name}.yaml`, 'utf8'))
     }
+  }
+
+  getSetPool (user) {
+    if (!fs.existsSync(`${this.dataPath}${user}/pool.yaml`)) {
+      return this.getPool()
+    } else {
+      return YAML.parse(fs.readFileSync(`${this.dataPath}${user}/pool.yaml`, 'utf8'))
+    }
+  }
+
+  checkarr (arr, num) {
+    if (!arr) return false
+    while (arr.length > num) {
+      arr.pop()
+    }
+    while (arr.length < num) {
+      arr.push(arr[arr.length - 1])
+    }
+    return arr
   }
 }
 

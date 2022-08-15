@@ -131,10 +131,7 @@ export class admin extends plugin {
           break
         case 'genshin.w5':
           arr = val.replaceAll('，', ',').split(',')
-          if (val.includes('，')) {
-            arr = val.split('，')
-          }
-          if (arr.length === 0 || arr.length > 2) {
+          if (arr.length !== 2) {
             e.reply('设置格式有误，再试一试吧！')
             return true
           }
@@ -144,9 +141,6 @@ export class admin extends plugin {
           break
         case 'genshin.w4':
           arr = val.replaceAll('，', ',').split(',')
-          if (val.includes('，')) {
-            arr = val.split('，')
-          }
           if (arr.length === 0) {
             e.reply('设置格式有误，再试一试吧！')
             return true
@@ -157,11 +151,6 @@ export class admin extends plugin {
           break
         case 'genshin.c4':
           arr = val.replaceAll('，', ',').split(',')
-          if (!arr) {
-            e.reply('当前卡池里找不到某个角色呢！')
-            return true
-          }
-          pool.up4 = getarrName(arr)
           setConfig('gacha', 'pool', pool)
           cfgKey = false// 取消独立验证
           break

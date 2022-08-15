@@ -3,6 +3,7 @@ import gsCfg from './gsCfg.js'
 import lodash from 'lodash'
 import moment from 'moment'
 import fetch from 'node-fetch'
+import pool from './pool.js'
 
 export default class GachaData extends base {
   /**
@@ -77,7 +78,7 @@ export default class GachaData extends base {
 
   /** 奖池数据 */
   async getPool () {
-    let NowPool = gsCfg.getPool()
+    let NowPool = pool.getPool(this.e.user_id)
     /** 获取设置卡池 */
     this.NowPool = NowPool
 
