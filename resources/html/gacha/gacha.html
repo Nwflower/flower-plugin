@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="#" />
     <link rel="stylesheet" type="text/css" href="{{pluResPath}}html/gacha/gacha.css" />
     <link rel="preload" href="{{resPath}}font/tttgbnumber.ttf" as="font">
-    <link rel="preload" href="{{pluResPath}}gacha/default/items/background.jpg" as="image">
+    <link rel="preload" href="{{pluResPath}}gacha/default/img/background.jpg" as="image">
   </head>
   <body>
     <div class="container" id="container">
@@ -25,13 +25,13 @@
         {{each list}}
           <div class="item">
             <div class="item-bg-box">
-              <img class="item-bg" src="{{pluResPath}}gacha/default/items/bg.png"/>
+              <img class="item-bg" src="{{pluResPath}}gacha/default/img/bg.png"/>
               {{if $value.type=='weapon' && $value.star==5}}
-              <img class="item-bg-weapon" src="{{pluResPath}}gacha/default/items/bgWeapon.png"/>
+              <img class="item-bg-weapon" src="{{pluResPath}}gacha/default/img/bgWeapon.png"/>
               {{/if}}
             </div>
-            <img class="item-shadow" src="{{pluResPath}}gacha/default/items/shadow-{{$value.star}}{{$value.rand ? '-' + $value.rand : ''}}.png"/>
-            <img class="item-shadow2" src="{{pluResPath}}gacha/default/items/bg2.png"/>
+            <img class="item-shadow" src="{{pluResPath}}gacha/default/img/shadow-{{$value.star}}{{$value.rand ? '-' + $value.rand : ''}}.png"/>
+            <img class="item-shadow2" src="{{pluResPath}}gacha/default/img/bg2.png"/>
             {{if $value.type=='weapon'}}
               <div class="item-weapon-box">
                 <img class="item-weapon-img" src="{{pluResPath}}gacha/default/{{$value.type}}/{{$value.star}}/{{$value.name}}.png"/>
@@ -47,18 +47,18 @@
             {{/if}}
             {{if $value.have && $value.type == 'role'}}
               {{if $value.star == 5}}
-                <img class="item-starGold" src="{{pluResPath}}gacha/default/items/星尘金.png" />
-                <img class="item-starlight" src="{{pluResPath}}gacha/default/items/星辉10.png" />
+                <img class="item-starGold" src="{{pluResPath}}gacha/default/img/星尘金.png" />
+                <img class="item-starlight" src="{{pluResPath}}gacha/default/img/星辉10.png" />
               {{else}}
-                <img class="item-starGold" src="{{pluResPath}}gacha/default/items/星尘紫.png" />
-                <img class="item-starlight" src="{{pluResPath}}gacha/default/items/星辉2.png" />
+                <img class="item-starGold" src="{{pluResPath}}gacha/default/img/星尘紫.png" />
+                <img class="item-starlight" src="{{pluResPath}}gacha/default/img/星辉2.png" />
               {{/if}}
             {{else}} 
               {{if $value.element }}
-                <img class="item-element"  src="{{pluResPath}}gacha/default/items/{{$value.element}}.png"/>
+                <img class="item-element"  src="{{pluResPath}}gacha/default/img/{{$value.element}}.png"/>
               {{/if}}
               {{if $value.star }}
-                <img class="item-star" src="{{pluResPath}}gacha/default/items/s-{{$value.star}}.png"/>
+                <img class="item-star" src="{{pluResPath}}gacha/default/img/s-{{$value.star}}.png"/>
               {{/if}} 
             {{/if}}
           </div>
