@@ -5,11 +5,12 @@ import YAML from 'yaml'
 class Pool {
   constructor () {
     /** 卡池 */
+    this._path = process.cwd().replace(/\\/g, '/')
     this.configPath = './plugins/flower-plugin/config/'
 
     this.defSetPath = './plugins/flower-plugin/defSet/'
 
-    this.dataPath = './plugins/flower-plugin/data/'
+    this.dataPath = `${this._path}/plugins/flower-plugin/data/`
     this.defSet = {}
     /** 默认设置 */
     this.def = gsCfg.getPool()
@@ -41,8 +42,12 @@ class Pool {
   delPool (uin) {
     this.init()
     if (fs.existsSync(`${this.dataPath}${uin}/pool.yaml`)) {
-      fs.rmdirSync(`${this.dataPath}${uin}/pool.yaml`)
-      fs.rmdirSync(`${this.dataPath}${uin}/`)
+      fs.unlink(`${this.dataPath}${uin}/pool.yaml`, function (err) {
+        if (err) {
+          logger.error(err)
+        }
+        logger.info('删除成功')
+      })
     }
   }
 }

@@ -42,7 +42,7 @@ export class Mypool extends plugin {
     if (!regRet) {
       return true
     }
-    let mypo = pool.getPool(this.e)
+    let mypo = pool.getPool(this.e.user_id)
 
     let msgs = []
     let tmpmsg = ''
@@ -100,9 +100,11 @@ export class Mypool extends plugin {
             }
           }
           if (!namearr) {
+            await this.reply('设置失败')
             break
           }
           mypo.up4 = gsCfg.checkarr(namearr, 3)
+          logger.info(mypo)
           await pool.setPool(this.e.user_id, mypo)
           break
         case 'pool.w5' :
@@ -213,7 +215,8 @@ export class Mypool extends plugin {
     let c4 = '\n当前UP四星角色' + pY.up4.join()
     let w5 = '\n当前武器池UP武器' + pY.weapon5.join()
     let w4 = '\n当前武器池UP武器' + pY.weapon4.join()
-    return c5 + c4 + w5 + w4
+    let addi = '\n-------\n快速更改角色请使用命令#我的卡池角色列表、重置请使用#我的卡池重置'
+    return c5 + c4 + w5 + w4 + addi
   }
 
   async getpng (type, star) {
