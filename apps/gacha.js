@@ -13,7 +13,7 @@ export class gacha extends plugin {
       priority: 100,
       rule: [
         {
-          reg: '^#*(10|[武器池常驻]*[十百]+|抽|单)[连抽卡奖][123武器池常驻]*$',
+          reg: '^#*(10|[武器池常驻]*([一二三四五六七八九]?[十百]+)|抽|单)[连抽卡奖][123武器池常驻]*$',
           fnc: 'gacha'
         },
         {
@@ -30,7 +30,9 @@ export class gacha extends plugin {
 
     if (this.checkLimit()) return
 
-    if (this.e.msg.includes('十')) {
+    let gachacishu = await this.cishu()
+
+    if (Number(gachacishu) === 1 || isNaN(gachacishu)) {
       let data = await this.GachaData.run()
       /** 生成图片 */
       let img = await puppeteer.screenshot('gacha', data)
@@ -44,7 +46,7 @@ export class gacha extends plugin {
       await this.reply(img, false, { recallMsg })
     } else {
       let datas = []; let all5 = 0; let all4 = 0; let imgs = []; let w; let imgss = []
-      for (let i = 1; i <= 10; i++) {
+      for (let i = 1; i <= gachacishu; i++) {
         datas[i] = await this.GachaData.run(this.GachaData.set.tenGacha === 1)
         // eslint-disable-next-line no-unused-vars
         all5 += datas[i].nowFive
@@ -149,5 +151,17 @@ export class gacha extends plugin {
     if (fs.existsSync(process.cwd().replace(/\\/g, '/') + '/plugins/flower-plugin/config/gacha.set.yaml')) return
 
     fs.copyFileSync(process.cwd().replace(/\\/g, '/') + '/plugins/flower-plugin/defSet/gacha/set.yaml', './plugins/flower-plugin/config/gacha.set.yaml')
+  }
+
+  /** 获取抽卡次数 */
+  async cishu () {
+    let each = this.e.msg.replace(/(0|1|[武器池]*|十|抽|单|连|卡|奖|2|3)/g, '').trim()
+    let replaceArr = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '百']
+    for (let i = 0; i <= 9; i++) {
+      if (each.indexOf(replaceArr[i]) !== -1) {
+        return (i + 1)
+      }
+    }
+    return 1
   }
 }
