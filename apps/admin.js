@@ -151,6 +151,7 @@ export class admin extends plugin {
           break
         case 'genshin.c4':
           arr = val.replaceAll('，', ',').split(',')
+          pool.up4 = arr
           setConfig('gacha', 'pool', pool)
           cfgKey = false// 取消独立验证
           break
@@ -298,13 +299,7 @@ const getName = function (genshinname) {
   return gsCfg.roleIdToName(gsCfg.roleNameToID(genshinname))
 }
 
-const getarrName = function (alotofname) {
-  let arr = []
-  for (let name of alotofname) {
-    arr.push(getName(name))
-  }
-  return arr
-}
+
 const getStatus = function (rote, def = true) {
   if (Cfg.get(rote, def)) {
     return '<div class="cfg-status" >已开启</div>'
