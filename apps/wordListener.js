@@ -3,6 +3,10 @@ import fs from 'fs'
 import YAML from 'yaml'
 import lodash from 'lodash'
 
+let pathk = process.cwd().replace(/\\/g, '/') + '/plugins/flower-plugin/resources/blackword/'
+if (!fs.existsSync(pathk)) {
+  fs.mkdirSync(pathk)
+}
 export class wordListener extends plugin {
   constructor () {
     let rule = {
