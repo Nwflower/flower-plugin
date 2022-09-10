@@ -39,7 +39,7 @@ export class wordListener extends plugin {
   }
 
   async wordsListener (e) {
-    // if (this.e.isMaster) { return false }
+    if (this.e.isMaster) { return false }
     if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     let msgdata = ''
     for (let val of e.message) {
@@ -69,7 +69,7 @@ export class wordListener extends plugin {
   }
 
   async delBlackWord () {
-    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
+    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
     let word = this.e.msg.replaceAll(/#*解除屏蔽/g, '').trim()
     const worldfiles = fs
       .readdirSync(`${this._path}/plugins/flower-plugin/resources/blackword`)
@@ -93,7 +93,7 @@ export class wordListener extends plugin {
   }
 
   async addBlackWord () {
-    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
+    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
     let word = this.e.msg.replaceAll(/#*添加屏蔽/g, '').trim()
     if (!word) { return false }
     let exword = []
