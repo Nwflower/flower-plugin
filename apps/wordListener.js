@@ -57,6 +57,14 @@ export class wordListener extends plugin {
     return false
   }
 
+  async CheckAuth () {
+    let qq = this.e.group.pickMember(this.e.sender.user_id)
+    if (qq.is_owner || qq.is_admin || qq.isMaster) {
+      return true
+    }
+    return false
+  }
+
   async getBlackWords () {
     let wordlist = []
     const worldfiles = fs
@@ -70,6 +78,9 @@ export class wordListener extends plugin {
 
   async delBlackWord () {
     if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
+    if (!await this.CheckAuth()) {
+      this.reply('很抱歉，你没有权限')
+    }
     let word = this.e.msg.replaceAll(/#*解除屏蔽/g, '').trim()
     const worldfiles = fs
       .readdirSync(`${this._path}/plugins/flower-plugin/resources/blackword`)
@@ -94,6 +105,9 @@ export class wordListener extends plugin {
 
   async addBlackWord () {
     if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
+    if (!await this.CheckAuth()) {
+      this.reply('很抱歉，你没有权限')
+    }
     let word = this.e.msg.replaceAll(/#*添加屏蔽/g, '').trim()
     if (!word) { return false }
     let exword = []
