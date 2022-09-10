@@ -431,7 +431,9 @@ export default class GachaData extends base {
 
     let name = this.pool.up5[this.user[this.type].type - 1]
 
-    name = gsCfg.shortName(name, true)
+    if (sortName) {
+      name = gsCfg.shortName(name, true)
+    }
 
     return name
   }

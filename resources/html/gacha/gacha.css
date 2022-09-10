@@ -20,7 +20,7 @@ body {
 .container {
   width: 1286px;
   height: 670px;
-  background-image: url(../../img/gacha/items/background.jpg);
+  background-image: url(../../gacha/default/img/background.jpg);
   background-size: 100% 100%;
   overflow: hidden;
 }
