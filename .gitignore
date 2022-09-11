@@ -3,4 +3,4 @@
 /components/cfg.json
 *.css.map
 /config/*.yaml
-/resources/blackword/*.yaml
+/resources/blackword/**
