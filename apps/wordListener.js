@@ -62,23 +62,22 @@ export class wordListener extends plugin {
       let message = []
       for (let j = i; j < i + 100 && j < words.length; j++) {
         message.push(`${j + 1}、【${words[j]}】`)
-        if (j !== words.length - 1) message.push('\n')
+        if (j !== i + 99) message.push('\n')
       }
       forWordMsg.push({
         message,
         nickname: Bot.nickname,
         user_id: Bot.uin
       })
-      if (i > 4800) {
+      if (i > 500) {
         forWordMsg.push({
-          message: `本群屏蔽词较多，剩下的${words.length - 4800}个词语已经省略`,
+          message: `本群屏蔽词较多，剩下的${words.length - i}个词语已经省略`,
           nickname: Bot.nickname,
           user_id: Bot.uin
         })
         break
       }
     }
-
     // 获取全局违禁词
     words = []
     files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
@@ -92,27 +91,28 @@ export class wordListener extends plugin {
       let message = []
       for (let j = i; j < i + 100 && j < words.length; j++) {
         message.push(`${j + 1}、【${words[j]}】`)
-        if (j !== words.length - 1) message.push('\n')
+        if (j !== i + 99) message.push('\n')
       }
       forWordMsg.push({
         message,
         nickname: Bot.nickname,
         user_id: Bot.uin
       })
-      if (i > 4800) {
+      if (i > 500) {
         forWordMsg.push({
-          message: `全局屏蔽词较多，剩下的${words.length - 4800}个词语已经省略`,
+          message: `全局屏蔽词较多，剩下的${words.length - i}个词语已经省略`,
           nickname: Bot.nickname,
           user_id: Bot.uin
         })
+        break
       }
     }
     let sed = await this.e.group.makeForwardMsg(forWordMsg)
-    await this.reply(sed)
+    await this.reply(sed, false, 100)
   }
 
   async wordsListener () {
-    // if (this.e.isMaster) { return false }
+    if (this.e.isMaster) { return false }
     if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     let receivedMsg = ''
     for (let val of this.e.message) {
@@ -128,15 +128,19 @@ export class wordListener extends plugin {
       let DelReg = /#*(解除|删除|取消|不)屏蔽(本群|全局)?/g
       if (DelReg.test(this.e.msg)) { return false }
       let wordlist = await this.getBlackWords()
-      for (let word of wordlist) {
-        if (receivedMsg.includes(word) && word) {
-          this.e.group.recallMsg(this.e.message_id)
-          await this.e.group.muteMember(this.e.sender.user_id, 1)
-          await this.reply('检测到违规词汇，已经制裁')
-          logger.info(`检测到违禁词：${word}`)
-          this.islog = true
-          return true
+      try {
+        for (let word of wordlist) {
+          if (receivedMsg.includes(word) && word) {
+            this.e.group.recallMsg(this.e.message_id)
+            await this.e.group.muteMember(this.e.sender.user_id, 1)
+            await this.reply('检测到违规词汇，已经制裁')
+            logger.info(`检测到违禁词：${word}`)
+            this.islog = true
+            return true
+          }
         }
+      } catch (e) {
+        logger.mark('违规词监听报错')
       }
     }
     return false
@@ -154,6 +158,7 @@ export class wordListener extends plugin {
     let globalPath = `${this.wordResPath}/global`
     let groupPath = `${this.wordResPath}/${this.e.group_id}`
     // 获取全局违禁词
+    await this.init(`${globalPath}/`)
     let files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
     for (let file of files) { words = lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
     // 获取本群违禁词
