@@ -99,8 +99,9 @@ export class wordListener extends plugin {
         user_id: Bot.uin
       })
       if (i > 500) {
+        let ellipsisWords = words.length - i
         forWordMsg.push({
-          message: `全局屏蔽词较多，剩下的${words.length - i}个词语已经省略`,
+          message: `全局屏蔽词较多，剩下的${ellipsisWords}个词语已经省略`,
           nickname: Bot.nickname,
           user_id: Bot.uin
         })
@@ -175,31 +176,40 @@ export class wordListener extends plugin {
       this.reply('很抱歉，你没有权限')
       return true
     }
-    let word = this.e.msg.replaceAll(/#*(解除|删除|取消|不)屏蔽(本群|全局)?/g, '').trim()
-    if (!word) { return false }
+    let handleSentence = this.e.msg.replaceAll(/#*(解除|删除|取消|不)屏蔽(本群|全局)?/g, '').trim()
+    if (!handleSentence) { return false }
+    let handleWords = handleSentence.replaceAll('，', ',').split(',')
+    let indexWords = []
+    let existWord = []
+
     let folderPath = `${this.wordResPath}/global`
     let isLocal = /^#*(解除|删除|取消|不)屏蔽本群/g.test(this.e.msg)
     if (isLocal) { folderPath = `${this.wordResPath}/${this.e.group_id}` }
     const files = fs.readdirSync(folderPath).filter((file) => file.endsWith('.yaml'))
-    let flag = false
-    for (let file of files) {
-      let wordlist = YAML.parse(fs.readFileSync(`${folderPath}/${file}`, 'utf8'))
-      if (wordlist.includes(word)) {
-        flag = true
-        wordlist = lodash.remove(wordlist, (thisWord) => thisWord !== word)
-        if (!wordlist) {
-          fs.unlinkSync(`${folderPath}/${file}`)
-          continue
+
+    for (let handleWord of handleWords) {
+      for (let file of files) {
+        let wordlist = YAML.parse(fs.readFileSync(`${folderPath}/${file}`, 'utf8'))
+        if (wordlist.includes(handleWord)) {
+          indexWords.push(handleWord)
+          wordlist = lodash.remove(wordlist, (thisWord) => thisWord !== handleWord)
+          if (!wordlist) {
+            fs.unlinkSync(`${folderPath}/${file}`)
+            continue
+          }
+          fs.writeFileSync(`${folderPath}/${file}`, YAML.stringify(wordlist, null, '\t'))
         }
-        fs.writeFileSync(`${folderPath}/${file}`, YAML.stringify(wordlist, null, '\t'))
       }
     }
-    if (flag) {
-      let reMsg = (isLocal) ? `删除了本群屏蔽词：【${word}】` : `删除了全局屏蔽词：【${word}】`
-      this.reply(reMsg, true)
-    } else {
-      this.reply(`该词没有被屏蔽：【${word}】`, true, 110)
+    existWord = lodash.difference(handleWords, indexWords)
+    let reMsg = ''
+    if (indexWords.length) {
+      reMsg = reMsg + `删除了${(isLocal) ? '本群' : '全局'}屏蔽词：【${indexWords.join('】【')}】${(existWord.length) ? '\n' : ''}`
     }
+    if (existWord.length) {
+      reMsg = reMsg + `下列词没有被${(isLocal) ? '本群' : '全局'}屏蔽：【${existWord.join('】【')}】`
+    }
+    this.reply(reMsg, true)
     return true
   }
 
