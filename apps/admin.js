@@ -23,7 +23,9 @@ let cfgMap = {
   四星武器: 'genshin.w4',
   随机卡池: 'gacha.random',
   卡池同步: 'gacha.get',
-  转生间隔: 'relife.time'
+  转生间隔: 'relife.time',
+  群名片频率: 'card.hz',
+  群名片复位: 'card.set'
 }
 
 let sysCfgReg = `^#抽卡设置\\s*(${lodash.keys(cfgMap).join('|')})?\\s*(.*)$`
@@ -60,15 +62,10 @@ export class admin extends plugin {
   }
 
   async sysCfg (e) {
-    if (!e.isMaster) {
-      return true
-    }
+    if (!e.isMaster) { return true }
     let cfgReg = new RegExp(sysCfgReg)
     let regRet = cfgReg.exec(e.msg)
-
-    if (!regRet) {
-      return true
-    }
+    if (!regRet) { return true }
 
     let pool = getPool()
     let probability = getConfig('gacha', 'gacha')
@@ -111,7 +108,6 @@ export class admin extends plugin {
           break
         case 'genshin.c5':
           arr = val.replaceAll('，', ',').split(',')
-          // arr = val.replaceAll('，', ',').split(',')
           if (!arr) {
             e.reply('当前卡池里找不到指定的角色哦！')
             return true
@@ -194,6 +190,13 @@ export class admin extends plugin {
         case 'relife.time':
           val = Math.min(1440, Math.max(1, val * 1))
           break
+        case 'card.hz':
+          val = Math.min(1440, Math.max(0, val * 1))
+          break
+        case 'card.set':
+          Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, Bot.nickname) })
+          this.reply('所有群名片已复位为' + Bot.nickname)
+          return true
         default:
           val = !/关闭/.test(val)
           break
@@ -214,7 +217,8 @@ export class admin extends plugin {
       gachacharact4: probability.chance4,
       gachaweapon5: probability.chanceW5,
       gachaweapon4: probability.chanceW4,
-      relifetime: Cfg.get('relife.time', 120)
+      relifetime: Cfg.get('relife.time', 120),
+      cardHz: Cfg.get('card.hz', 0)
     }
 
     let gachaconfigchance = (probability.wai === 50 && probability.chance5 === 60 && probability.chance4 === 510 && probability.chanceW5 === 70 && probability.chanceW4 === 600) ? '无需复位' : '可复位'
@@ -294,11 +298,6 @@ export class admin extends plugin {
     return true
   }
 }
-
-const getName = function (genshinname) {
-  return gsCfg.roleIdToName(gsCfg.roleNameToID(genshinname))
-}
-
 
 const getStatus = function (rote, def = true) {
   if (Cfg.get(rote, def)) {

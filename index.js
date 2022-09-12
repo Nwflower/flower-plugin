@@ -3,7 +3,8 @@ import fs from 'node:fs'
 
 logger.info('--------->_<---------')
 logger.info(`抽卡插件${currentVersion}很高兴为您服务~`)
-logger.info('\n\n8888888888 888       .d88888b.  888       888 8888888888 8888888b.  \n' +
+logger.info('\n\n' +
+  '8888888888 888       .d88888b.  888       888 8888888888 8888888b.  \n' +
   '888        888      d88P" "Y88b 888   o   888 888        888   Y88b \n' +
   '888        888      888     888 888  d8b  888 888        888    888 \n' +
   '8888888    888      888     888 888 d888b 888 8888888    888   d88P \n' +
@@ -19,6 +20,7 @@ logger.info('\n\n8888888888 888       .d88888b.  888       888 8888888888 888888
   '888        888      888     888 888    888   888   888  Y88888 \n' +
   '888        888      Y88b. .d88P Y88b  d88P   888   888   Y8888 \n' +
   '888        88888888  "Y88888P"   "Y8888P88 8888888 888    Y888\n\n')
+
 const files = fs
   .readdirSync('./plugins/flower-plugin/apps')
   .filter((file) => file.endsWith('.js'))
@@ -30,7 +32,6 @@ for (let file of files) {
 }
 let index = { flower: {} }
 export const flower = index.flower || {}
-
 setTimeout(async function () {
   let msgStr = await redis.get('flower:restart-msg')
   let relpyPrivate = async function () { }
@@ -42,5 +43,7 @@ setTimeout(async function () {
     await relpyPrivate(msg.qq, msgs.join('\n'))
   }
 }, 1000)
-
+setTimeout(async function () {
+  Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, Bot.nickname) })
+}, 30000)
 export { apps }
