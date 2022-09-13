@@ -1,10 +1,10 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import os from 'os'
 import { Cfg } from '../components/index.js'
+import lodash from 'lodash'
 
 // 命令规则
-let allGroup = []
-let nowGroup = 0
+let notGroup = Cfg.get('memory.group', [])
 let cd = 0
 let fix = 2 // 数据保留几位小数
 /**
@@ -36,21 +36,17 @@ export class Memory extends plugin {
   }
 
   mapToArr (map) {
-    allGroup = []
+    let allGroup = []
     map.forEach((v, k) => { allGroup.push(k) })
     return allGroup
   }
-
-  async init () { this.mapToArr(Bot.gl) }
 
   async CardTask () {
     let cdi = Cfg.get('card.hz', 1)
     if (!cdi) { return true } else if (cd++ < cdi) { return true } else { cd = 0 }
     let nowPerMem = await this.getPerMem()
-    if (allGroup.length) {
-      await this.setGroupCard(allGroup[nowGroup], nowPerMem, true)
-      if (nowGroup < allGroup.length - 1) { nowGroup++ } else { nowGroup = 0; await this.init() }
-    }
+    let taskGroup = lodash.difference(this.mapToArr(Bot.gl), notGroup)
+    if (taskGroup.length) { for (let groupId of taskGroup) { await this.setGroupCard(groupId, nowPerMem, true) } }
     return true
   }
 

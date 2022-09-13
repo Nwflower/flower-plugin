@@ -2,6 +2,7 @@
 import fs from 'fs'
 import YAML from 'yaml'
 import lodash from 'lodash'
+import Cfg from "../components/Cfg.js";
 
 export class wordListener extends plugin {
   constructor () {
@@ -33,6 +34,7 @@ export class wordListener extends plugin {
     this._path = process.cwd().replace(/\\/g, '/')
     this.wordResPath = `${this._path}/plugins/flower-plugin/resources/blackword`
     this.islog = false
+    this.nock = Cfg.get('word.listen', true)
     Object.defineProperty(rule, 'log', {
       get: () => this.islog
     })
@@ -113,6 +115,7 @@ export class wordListener extends plugin {
   }
 
   async wordsListener () {
+    if (this.nock) { return false }
     if (this.e.isMaster) { return false }
     if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     let receivedMsg = ''
@@ -149,6 +152,7 @@ export class wordListener extends plugin {
 
   // 检查权限
   async CheckAuth () {
+    if (this.nock) { return false }
     let qq = this.e.group.pickMember(this.e.sender.user_id)
     return (qq.is_owner || qq.is_admin || this.e.isMaster)
   }
@@ -172,10 +176,7 @@ export class wordListener extends plugin {
 
   async delBlackWord () {
     if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
-    if (!await this.CheckAuth()) {
-      this.reply('很抱歉，你没有权限')
-      return true
-    }
+    if (!await this.CheckAuth()) { return true }
     let handleSentence = this.e.msg.replaceAll(/#*(解除|删除|取消|不)屏蔽(本群|全局)?/g, '').trim()
     if (!handleSentence) { return false }
     let handleWords = handleSentence.replaceAll('，', ',').split(',')
@@ -216,10 +217,7 @@ export class wordListener extends plugin {
 
   async addBlackWord () {
     if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
-    if (!await this.CheckAuth()) {
-      this.reply('很抱歉，你没有权限')
-      return true
-    }
+    if (!await this.CheckAuth()) { return true }
     let handleSentence = this.e.msg.replaceAll(/#*屏蔽(本群|全局)?/g, '').trim()
     if (!handleSentence) { return false }
     let handleWords = handleSentence.replaceAll('，', ',').split(',')
