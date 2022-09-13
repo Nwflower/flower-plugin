@@ -11,11 +11,11 @@ import gsCfg from '../model/gsCfg.js'
 
 let cfgMap = {
   自定义: 'gacha.diy',
-  小保底概率: 'gacha.wai',
-  五星角色概率: 'gacha.c5',
-  四星角色概率: 'gacha.c4',
-  五星武器概率: 'gacha.w5',
-  四星武器概率: 'gacha.w4',
+  小保底概率: 'gachas.wai',
+  五星角色概率: 'gachas.chance5',
+  四星角色概率: 'gachas.chance4',
+  五星武器概率: 'gachas.chanceW5',
+  四星武器概率: 'gachas.chanceW4',
   概率复位: 'gacha.setchance',
   五星角色: 'genshin.c5',
   四星角色: 'genshin.c4',
@@ -25,7 +25,8 @@ let cfgMap = {
   卡池同步: 'gacha.get',
   转生间隔: 'relife.time',
   群名片频率: 'card.hz',
-  群名片复位: 'card.set'
+  群名片复位: 'card.set',
+  违禁词: 'word.listen'
 }
 
 let sysCfgReg = `^#抽卡设置\\s*(${lodash.keys(cfgMap).join('|')})?\\s*(.*)$`
@@ -78,29 +79,29 @@ export class admin extends plugin {
       let cfgKey = cfgMap[regRet[1]]
 
       switch (cfgKey) {
-        case 'gacha.c5':
+        case 'gachas.chance5':
           probability.chance5 = getValMath(val, 0, 10000)
           cfgKey = false// 取消独立验证
           break
-        case 'gacha.c4':
+        case 'gachas.chance4':
           probability.chance4 = getValMath(val, 0, 10000)
           cfgKey = false// 取消独立验证
           break
-        case 'gacha.w5':
+        case 'gachas.chanceW5':
           probability.chanceW5 = getValMath(val, 0, 10000)
           cfgKey = false// 取消独立验证
           break
-        case 'gacha.w4':
+        case 'gachas.chanceW4':
           probability.chanceW4 = getValMath(val, 0, 10000)
           cfgKey = false// 取消独立验证
           break
-        case 'gacha.wai':
+        case 'gachas.wai':
           probability.wai = getValMath(val, 0, 100)
           cfgKey = false// 取消独立验证
           break
         case 'gacha.setchance':
-          probability.chance5 = 50
-          probability.chance4 = 50
+          probability.chance5 = 60
+          probability.chance4 = 510
           probability.chanceW5 = 70
           probability.chanceW4 = 600
           probability.wai = 50
@@ -218,7 +219,8 @@ export class admin extends plugin {
       gachaweapon5: probability.chanceW5,
       gachaweapon4: probability.chanceW4,
       relifetime: Cfg.get('relife.time', 120),
-      cardHz: Cfg.get('card.hz', 0)
+      cardHz: Cfg.get('card.hz', 0),
+      word: getStatus('word.listen', true)
     }
 
     let gachaconfigchance = (probability.wai === 50 && probability.chance5 === 60 && probability.chance4 === 510 && probability.chanceW5 === 70 && probability.chanceW4 === 600) ? '无需复位' : '可复位'
