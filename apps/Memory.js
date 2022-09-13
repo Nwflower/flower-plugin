@@ -44,6 +44,8 @@ export class Memory extends plugin {
   async init () { this.mapToArr(Bot.gl) }
 
   async CardTask () {
+    let cdi = Cfg.get('card.hz', 1)
+    if (!cdi) { return true } else if (cd++ < cdi) { return true } else { cd = 0 }
     let nowPerMem = await this.getPerMem()
     if (allGroup.length) {
       await this.setGroupCard(allGroup[nowGroup], nowPerMem, true)
@@ -56,9 +58,6 @@ export class Memory extends plugin {
     if (!isTask) {
       groupId = await this.e.group_id; percentNum = await this.getPerMem()
       logger.info(`【更新群名片】更新了群${groupId}的群名片`)
-    } else {
-      let cdi = Cfg.get('card.hz', 1)
-      if (!cdi) { return true } else if (cd++ < cdi) { return true } else { cd = 0 }
     }
     await Bot.pickGroup(groupId).setCard(Bot.uin, `${Bot.nickname}｜当前内存占用${percentNum}%`)
   }

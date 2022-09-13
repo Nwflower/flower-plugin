@@ -184,6 +184,7 @@ export class wordListener extends plugin {
 
     let folderPath = `${this.wordResPath}/global`
     let isLocal = /^#*(解除|删除|取消|不)屏蔽本群/g.test(this.e.msg)
+    if (this.e.isMaster) { isLocal = true }
     if (isLocal) { folderPath = `${this.wordResPath}/${this.e.group_id}` }
     const files = fs.readdirSync(folderPath).filter((file) => file.endsWith('.yaml'))
 
@@ -226,6 +227,7 @@ export class wordListener extends plugin {
     let existWord = []
     let folderPath = `${this.wordResPath}/global/`
     let isLocal = /^#*屏蔽本群/g.test(this.e.msg)
+    if (this.e.isMaster) { isLocal = true }
     if (isLocal) { folderPath = `${this.wordResPath}/${this.e.group_id}/` }
     await this.init(folderPath)
     let wordPath = `${folderPath}${await this.getData()}.yaml`

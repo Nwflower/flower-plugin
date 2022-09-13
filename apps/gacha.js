@@ -4,6 +4,7 @@ import GachaData from '../model/gachaData.js'
 import fs from 'node:fs'
 import lodash from 'lodash'
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
+import { Cfg } from '../components/index.js'
 export class gacha extends plugin {
   constructor () {
     super({
@@ -27,7 +28,7 @@ export class gacha extends plugin {
   /** #十连 */
   async gacha () {
     this.GachaData = await GachaData.init(this.e)
-
+    if (!Cfg.get('gacha.diy', true)) { return false }
     if (this.checkLimit()) return
 
     let gachacishu = await this.cishu()

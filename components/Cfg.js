@@ -36,6 +36,9 @@ let Cfg = {
       return false
     }
     return !/^#*抽卡/.test(e.msg || '')
+  },
+  merged () {
+    return lodash.merge({}, cfg)
   }
 }
 
