@@ -19,7 +19,7 @@ logger.info('\n\n' +
   '8888888P"  888      888     888  888  88888     888     888 Y88b888 \n' +
   '888        888      888     888  888    888     888     888  Y88888 \n' +
   '888        888      Y88b. .d88P  Y88b  d88P     888     888   Y8888 \n' +
-  '888        88888888  "Y88888P"    "Y8888P88   8888888   888    Y888 \n\n')
+  '888        88888888  "Y88888P"    "Y8888P88   8888888   888    Y888 \n')
 
 const files = fs
   .readdirSync('./plugins/flower-plugin/apps')
@@ -43,7 +43,4 @@ setTimeout(async function () {
     await relpyPrivate(msg.qq, msgs.join('\n'))
   }
 }, 1000)
-setTimeout(async function () {
-  Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, Bot.nickname) })
-}, 30000)
 export { apps }

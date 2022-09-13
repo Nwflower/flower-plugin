@@ -1,13 +1,33 @@
 import fs from 'fs'
 import lodash from 'lodash'
+import YAML from 'yaml'
 
 const _path = process.cwd()
 const _cfgPath = `${_path}/plugins/flower-plugin/components/`
 let cfg = {}
 
+let configPath = `${_path}/plugins/flower-plugin/config/`
+let defSetPath = './plugins/flower-plugin/defSet/'
+
+const getConfig = function (app, name) {
+  let defp = `${defSetPath}${app}/${name}.yaml`
+  if (!fs.existsSync(`${configPath}${app}.${name}.yaml`)) {
+    fs.copyFileSync(defp, `${configPath}${app}.${name}.yaml`)
+  }
+  let conf = `${configPath}${app}.${name}.yaml`
+
+  try {
+    return YAML.parse(fs.readFileSync(conf, 'utf8'))
+  } catch (error) {
+    logger.error(`[${app}][${name}] 格式错误 ${error}`)
+    return false
+  }
+}
+
 try {
   if (fs.existsSync(_cfgPath + 'cfg.json')) {
     cfg = JSON.parse(fs.readFileSync(_cfgPath + 'cfg.json', 'utf8')) || {}
+    cfg.gachas = getConfig('gacha', 'gacha')
   }
 } catch (e) {
   // do nth
@@ -19,7 +39,10 @@ let Cfg = {
   },
   set (rote, val) {
     lodash.set(cfg, rote, val)
+    let gachas = cfg.gachas
+    delete cfg.gachas
     fs.writeFileSync(_cfgPath + 'cfg.json', JSON.stringify(cfg, null, '\t'))
+    cfg.gachas = gachas
   },
   del (rote) {
     lodash.set(cfg, rote, undefined)
