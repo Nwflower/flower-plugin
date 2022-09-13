@@ -32,6 +32,14 @@
     </li>
     <li class="cfg-li">
       <div class="cfg-line">
+        违禁词功能
+        <span class="cfg-hint"> #抽卡设置违禁词+开启/关闭</span>
+        {{@word}}
+      </div>
+      <div class="cfg-desc">监听违禁词功能的开关</div>
+    </li>
+    <li class="cfg-li">
+      <div class="cfg-line">
         转生间隔
         <span class="cfg-hint"> #抽卡设置转生间隔120</span>
         <div class="cfg-status">{{@relifetime}}</div>
@@ -124,38 +132,20 @@
 
     <li class="cfg-li">
       <div class="cfg-line-no-status">
-        祈愿五星角色
+        祈愿角色
         <span class="cfg-hint">#抽卡设置五星角色万叶,可莉</span>
         <div class="cfg-status"></div>
       </div>
-      <div class="cfg-desc">设置卡池五星角色,当前角色:{{@genshincharact5}}</div>
+      <div class="cfg-desc">设置卡池五星角色,当前五星角色:{{@genshincharact5}}；四星角色:{{@genshincharact4}}</div>
     </li>
 
     <li class="cfg-li">
       <div class="cfg-line-no-status">
-        祈愿四星角色
-        <span class="cfg-hint">#抽卡设置四星角色早柚,雷泽,行秋</span>
-        <div class="cfg-status"></div>
-      </div>
-      <div class="cfg-desc">设置卡池四星角色,当前角色:{{@genshincharact4}}</div>
-    </li>
-
-    <li class="cfg-li">
-      <div class="cfg-line-no-status">
-        祈愿五星武器
+        祈愿武器
         <span class="cfg-hint">#抽卡设置五星武器苍古自由之誓,四风原典</span>
         <div class="cfg-status"></div>
       </div>
-      <div class="cfg-desc">设置卡池五星武器,不允许输入别名,当前武器:{{@genshinweapon5}}</div>
-    </li>
-
-    <li class="cfg-li">
-      <div class="cfg-line-no-status">
-        祈愿四星武器
-        <span class="cfg-hint"> #抽卡设置四星武器+武器列表</span>
-        <div class="cfg-status"></div>
-      </div>
-      <div class="cfg-desc">设置卡池五星武器,当前武器:{{@genshinweapon4}}</div>
+      <div class="cfg-desc">设置卡池武器,不允许输入别名,当前五星武器:{{@genshinweapon5}};当前四星武器:{{@genshinweapon4}}</div>
     </li>
 
     <li class="cfg-li">
