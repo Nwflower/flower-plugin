@@ -34,7 +34,7 @@ export class wordListener extends plugin {
     this._path = process.cwd().replace(/\\/g, '/')
     this.wordResPath = `${this._path}/plugins/flower-plugin/resources/blackword`
     this.islog = false
-    this.nock = Cfg.get('word.listen', true)
+    this.nock = Cfg.get('word.listen', false)
     Object.defineProperty(rule, 'log', {
       get: () => this.islog
     })
@@ -115,7 +115,7 @@ export class wordListener extends plugin {
   }
 
   async wordsListener () {
-    if (this.nock) { return false }
+    if (!this.nock) { return false }
     if (this.e.isMaster) { return false }
     if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     let receivedMsg = ''
@@ -152,7 +152,7 @@ export class wordListener extends plugin {
 
   // 检查权限
   async CheckAuth () {
-    if (this.nock) { return false }
+    if (!this.nock) { return false }
     let qq = this.e.group.pickMember(this.e.sender.user_id)
     return (qq.is_owner || qq.is_admin || this.e.isMaster)
   }
