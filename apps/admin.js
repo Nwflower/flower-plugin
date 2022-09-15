@@ -26,7 +26,8 @@ let cfgMap = {
   转生间隔: 'relife.time',
   群名片频率: 'card.hz',
   群名片复位: 'card.set',
-  违禁词: 'word.listen'
+  违禁词: 'word.listen',
+  屏蔽词: 'word.listen'
 }
 
 let sysCfgReg = `^#抽卡设置\\s*(${lodash.keys(cfgMap).join('|')})?\\s*(.*)$`
