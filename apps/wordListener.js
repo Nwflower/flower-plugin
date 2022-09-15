@@ -2,7 +2,7 @@
 import fs from 'fs'
 import YAML from 'yaml'
 import lodash from 'lodash'
-import Cfg from "../components/Cfg.js";
+import Cfg from '../components/Cfg.js'
 
 export class wordListener extends plugin {
   constructor () {
@@ -45,6 +45,7 @@ export class wordListener extends plugin {
   }
 
   async blackList () {
+    if (!this.nock) { return false }
     let words = []
     let files = []
     let forWordMsg = []
@@ -82,8 +83,10 @@ export class wordListener extends plugin {
     }
     // 获取全局违禁词
     words = []
-    files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
-    for (let file of files) { words = lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
+    if (fs.existsSync(groupPath)) {
+      files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
+      for (let file of files) { words = lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
+    }
     forWordMsg.push({
       message: `全局屏蔽词如下，共 ${words.length} 个`,
       nickname: Bot.nickname,
@@ -185,7 +188,7 @@ export class wordListener extends plugin {
 
     let folderPath = `${this.wordResPath}/global`
     let isLocal = /^#*(解除|删除|取消|不)屏蔽本群/g.test(this.e.msg)
-    if (this.e.isMaster) { isLocal = true }
+    if (!this.e.isMaster) { isLocal = true }
     if (isLocal) { folderPath = `${this.wordResPath}/${this.e.group_id}` }
     const files = fs.readdirSync(folderPath).filter((file) => file.endsWith('.yaml'))
 
@@ -225,7 +228,7 @@ export class wordListener extends plugin {
     let existWord = []
     let folderPath = `${this.wordResPath}/global/`
     let isLocal = /^#*屏蔽本群/g.test(this.e.msg)
-    if (this.e.isMaster) { isLocal = true }
+    if (!this.e.isMaster) { isLocal = true }
     if (isLocal) { folderPath = `${this.wordResPath}/${this.e.group_id}/` }
     await this.init(folderPath)
     let wordPath = `${folderPath}${await this.getData()}.yaml`

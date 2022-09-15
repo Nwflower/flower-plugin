@@ -220,7 +220,7 @@ export class admin extends plugin {
       gachaweapon4: probability.chanceW4,
       relifetime: Cfg.get('relife.time', 120),
       cardHz: Cfg.get('card.hz', 0),
-      word: getStatus('word.listen', true)
+      word: getStatus('word.listen', false)
     }
 
     let gachaconfigchance = (probability.wai === 50 && probability.chance5 === 60 && probability.chance4 === 510 && probability.chanceW5 === 70 && probability.chanceW4 === 600) ? '无需复位' : '可复位'
