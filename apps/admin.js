@@ -47,7 +47,7 @@ export class admin extends plugin {
           fnc: 'sysCfg'
         },
         {
-          reg: '#*抽卡(插件)?(强制)?更新',
+          reg: '^#*抽卡(插件)?(强制)?更新$',
           fnc: 'updateGachaPlugin'
         }
       ]
