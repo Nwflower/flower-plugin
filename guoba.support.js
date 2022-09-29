@@ -42,8 +42,8 @@ export function supportGuoba () {
     // 如果你的插件没有在插件库里，那么需要填上补充信息
     // 如果存在的话，那么填不填就无所谓了，填了就以你的信息为准
     pluginInfo: {
-      name: '抽卡插件(V3)',
-      title: 'Flower-Plugin',
+      name: 'flower-plugin',
+      title: '抽卡插件(V3)',
       author: '@西北一枝花',
       authorLink: 'https://github.com/Nwflower',
       link: 'https://github.com/Nwflower/flower-plugin',
