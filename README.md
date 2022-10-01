@@ -1,56 +1,56 @@
-# 抽卡插件flower-plugin
-### 介绍
-Yunzai-Bot V3 的插件包，主要提供拓展抽卡功能，旨在不修改原卡池信息的情况下提供自定义卡池的拓展
-如果你在找适用于V2版本的插件包，请点击
-[适用于V2版本的抽卡插件](https://gitee.com/Nwflower/Gacha-plugin)
+# Flower-Plugin
+### Introduce
+Plugin For Yunzai-Bot V3 ,it mainly provides Gacha function,that is to customize the gacha pool without modifying the original gacha pool.
+If you're looking for plugin for Yunzai V2,please click this.
+[Gacha-Plugin](https://gitee.com/Nwflower/Gacha-plugin)
 
-### 已经实现的功能
-1. 自定义抽卡人物：如科莱、伽罗等
-2. 基于命令修改卡池概率
-3. 命令修改卡池角色，详情见`抽卡设置`,个人自定义修改请发送`我的卡池`
-4. 百连
-5. 基于命令修改群聊现在，详见`#设置抽卡`
+### Implemented functions
+1. Custom gacha characters:such as Nahida,Layla...
+2. Use the command to modify the gacha pool probability.
+3. Use the command to modify the gacha pool role ,see details`#抽卡设置`,personal custom modification,please send`#我的卡池`
+4. Hundreds of Gacha
+5. Use the command to modify the configuration of a single group,please send`#设置抽卡`
 
-### 联系方式
-#### 群号：240979646
-鸣谢
+### Contact information
+#### Exchange group：240979646
+Acknowledgement list
 
-| 名单 | 联系方式 | 主要贡献 |
+| List | Contact information | Major contribution |
 |----|----|----|
-| SunRy曉K | QQ1509293009 | 提供资源图片 |
-| ZDPLM | QQ2895699730 | 提供资源图片 |
+| SunRy曉K | QQ1509293009 | Provide resource pictures |
+| ZDPLM | QQ2895699730 | Provide resource pictures |
 
-### 使用说明
+### Instructions
 
-本插件为[云崽bot](https://gitee.com/Le-niao/Yunzai-Bot)的辅助插件
+This assist plugin is for[Yunzai-Bot](https://gitee.com/Le-niao/Yunzai-Bot)
 
-全员卡池默认`无大保底无定轨`，添加图片添加到`resource/gacha/img/`目录下的两个对应文件夹的对应星级中，重启即可。要求图片分辨率150\*480;
+All staff gacha pool`无大保底无定轨`,add pictures to`resource/gacha/img/`corresponding folder location,then restart.Picture resolution required150\*480;
 
-### 安装教程
-在云崽根目录下运行以下代码
+### Installation tutorial
+Enter this line of code in this position ~/Yunzai-Bot
 ```
-使用github
+//Use Github
 git clone --depth=1 https://github.com/Nwflower/flower-plugin.git ./plugins/flower-plugin/
 
-使用gitee
+/MUse Gitee
 git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flower-plugin/
 ```
 
-### 更新
-发送命令 `#抽卡更新` 即可实现更新操作
+### Update
+Send command `#抽卡更新` and the update operation can be realized.
 
-### 命令说明
-1. 继承了原抽卡命令`#十连`等
-2. 打开设置使用`#抽卡设置`设置重要参数等
-3. 覆盖开关默认打开
-4. 更多的抽卡，如`#三十连` `#六十连` 以及你最高可以说`#百连`！
-5. 使用`#抽卡版本`查看当前版本 
+### Command description
+1. Inherited the original gacha command.`#十连`and so on
+2. Send use`#抽卡设置`to set important parameters, etc.
+3. Override switch on by default.
+4. MORE GACHA，for example `#三十连` `#六十连` and you can send the highest `#百连`！
+5. Use`#抽卡版本`to view the current version
 
-### 其他
-- 最后再求个star，你的支持是维护本项目的动力~~
-- 图片素材来源于网络，仅供交流学习使用
-- 严禁用于任何商业用途和非法行为
+### Other
+- Finally, ask one more star，your wisdom teeth are the driving force to maintain this project.~~
+- The pictures are from the Internet, only for learning and communication.
+- It is strictly forbidden to use it for any commercial purposes and illegal activities.
 
 
-### 其他插件
-[Yunzai-Bot插件索引](https://gitee.com/Hikari666/Yunzai-Bot-plugins-index) 
+### Other Plugin
+[Yunzai-Bot Plugins index](https://gitee.com/Hikari666/Yunzai-Bot-plugins-index) 
