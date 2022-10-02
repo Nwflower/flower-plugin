@@ -20,7 +20,7 @@ export class Mypool extends plugin {
       name: '我的卡池',
       dsc: '修改卡池',
       event: 'message',
-      priority: 101,
+      priority: 1681,
       rule: [{
         reg: sysCfgReg,
         fnc: 'sysCfg'

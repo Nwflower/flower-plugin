@@ -40,7 +40,7 @@ export class admin extends plugin {
       name: '抽卡插件管理',
       dsc: '管理抽卡插件',
       event: 'message',
-      priority: 100,
+      priority: 1679,
       rule: [
         {
           reg: sysCfgReg,

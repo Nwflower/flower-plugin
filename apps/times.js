@@ -20,7 +20,7 @@ export class times extends plugin {
       name: '抽卡次数管理',
       dsc: '管理抽卡插件',
       event: 'message',
-      priority: 101,
+      priority: 1704,
       rule: [
         {
           reg: sysCfgReg,

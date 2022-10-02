@@ -11,7 +11,7 @@ export class genshinrelife extends plugin {
       name: '转生',
       dsc: '转生成原神中的角色',
       event: 'message',
-      priority: 500,
+      priority: 1680,
       rule: [
         {
           reg: '^#*转生$',
