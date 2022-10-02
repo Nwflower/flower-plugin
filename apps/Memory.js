@@ -2,9 +2,11 @@ import plugin from '../../../lib/plugins/plugin.js'
 import os from 'os'
 import { Cfg } from '../components/index.js'
 import lodash from 'lodash'
+import Error from '../model/error.js'
 
 // 命令规则
 let notGroup = Cfg.get('memory.group', [])
+let nikename = '' // 机器人名字，留空为昵称
 let cd = 0
 let fix = 2 // 数据保留几位小数
 /**
@@ -42,10 +44,12 @@ export class Memory extends plugin {
   }
 
   async CardTask () {
+    if (await redis.get('flower:safe-ban-cd')) return true
     let cdi = Cfg.get('card.hz', 1)
     if (!cdi) { return true } else if (cd++ < cdi) { return true } else { cd = 0 }
     let nowPerMem = await this.getPerMem()
     let taskGroup = lodash.difference(this.mapToArr(Bot.gl), notGroup)
+
     if (taskGroup.length) { for (let groupId of taskGroup) { await this.setGroupCard(groupId, nowPerMem, true) } }
     return true
   }
@@ -55,7 +59,13 @@ export class Memory extends plugin {
       groupId = await this.e.group_id; percentNum = await this.getPerMem()
       logger.info(`【更新群名片】更新了群${groupId}的群名片`)
     }
-    await Bot.pickGroup(groupId).setCard(Bot.uin, `${Bot.nickname}｜当前内存占用${percentNum}%`)
+    try {
+      await Bot.pickGroup(groupId).setCard(Bot.uin, `${nikename || Bot.nickname}｜当前内存占用${percentNum}%`)
+    } catch (e) {
+      logger.error(Error.getErrorByCode(101))
+      console.log(e)
+      await redis.set('flower:safe-ban-cd', 'TRUE', { EX: 3600 * 6 })
+    }
   }
 
   getPerMem () {
