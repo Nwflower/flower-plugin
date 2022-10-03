@@ -152,7 +152,6 @@ class GsCfg {
     this.nameID = new Map()
 
     let nameArr = this.getdefSet('role', 'name')
-    let nameArrUser = this.getConfig('role', 'name')
 
     let nameID = {}
 
@@ -160,12 +159,6 @@ class GsCfg {
       nameID[nameArr[i][0]] = i
       for (let abbr of nameArr[i]) {
         this.nameID.set(String(abbr), i)
-      }
-    }
-
-    for (let i in nameArrUser) {
-      for (let abbr of nameArrUser[i]) {
-        this.nameID.set(String(abbr), nameID[i])
       }
     }
   }
@@ -199,6 +192,11 @@ class GsCfg {
       arr.push(arr[arr.length - 1])
     }
     return arr
+  }
+
+  getStar (roleID) {
+    let allrole = this.getYaml('role', 'other', 'defSet')
+    return !!allrole.five.includes(parseInt(roleID))
   }
 }
 
