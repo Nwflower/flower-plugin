@@ -9,7 +9,7 @@ export class singlegacha extends plugin {
       name: '单抽',
       dsc: '模拟抽卡，单抽一次，必出四星及以上角色',
       event: 'message',
-      priority: 99,
+      priority: 98,
       rule: [
         {
           reg: '^#*单抽$',

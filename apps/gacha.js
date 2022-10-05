@@ -11,7 +11,7 @@ export class gacha extends plugin {
       name: '十连',
       dsc: '模拟抽卡，每天十连一次，四点更新',
       event: 'message',
-      priority: 100,
+      priority: 99,
       rule: [
         {
           reg: '^#*(10|[武器池常驻]*([一二三四五六七八九]?[十百]+)|抽)[连抽卡奖][123武器池常驻]*$',
