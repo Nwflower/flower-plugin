@@ -30,7 +30,7 @@ export class singlegacha extends plugin {
     let k = Math.ceil(Math.random() * files.length)
     for (let file of files) {
       if (k-- === 0) {
-        file = file.replaceAll('.png', '').trim()
+        file = file.replace('.png', '').trim()
         let star = '4'
         if (gsCfg.getStar(gsCfg.roleNameToID(file))) {
           star = '5'
