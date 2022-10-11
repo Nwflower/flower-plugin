@@ -5,7 +5,7 @@ import lodash from 'lodash'
 import Error from '../model/error.js'
 
 // 命令规则
-let notGroup = Cfg.get('memory.group', [])
+let notGroup = Cfg.get('memory.group', []) // 不更新群名片的群组，需要手动设置，具体加群了解
 let nikename = '' // 机器人名字，留空为昵称
 let cd = 0
 let fix = 2 // 数据保留几位小数
