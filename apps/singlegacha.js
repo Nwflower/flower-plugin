@@ -32,7 +32,7 @@ export class singlegacha extends plugin {
     const files = fs
       .readdirSync(`${this._path}/plugins/flower-plugin/resources/gacha/single/role`)
       .filter((file) => file.endsWith('.png'))
-    let k = 2
+    let k = Math.ceil(Math.random() * files.length)
     let i = k
     let recallMsg = this.set.delMsg
     this.user.today.num++
