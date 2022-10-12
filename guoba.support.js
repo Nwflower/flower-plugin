@@ -43,13 +43,13 @@ export function supportGuoba () {
     // 如果存在的话，那么填不填就无所谓了，填了就以你的信息为准
     pluginInfo: {
       name: 'flower-plugin',
-      title: '抽卡插件(V3)',
+      title: '抽卡插件',
       author: '@西北一枝花',
       authorLink: 'https://github.com/Nwflower',
       link: 'https://github.com/Nwflower/flower-plugin',
       isV3: true,
       isV2: false,
-      description: '个性化抽卡、转生、文字狱',
+      description: '百连、单抽、转生、更新群名片、设置头衔xxx、谁是卧底、#抽卡设置、#设置抽卡、#我的卡池、文字狱',
       // 显示图标，此为个性化配置
       // 图标可在 https://icon-sets.iconify.design 这里进行搜索
       icon: 'iconoir:3d-three-pts-box',
