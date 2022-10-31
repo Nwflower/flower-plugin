@@ -56,8 +56,9 @@ export class Memory extends plugin {
 
   async setGroupCard (groupId, percentNum, isTask = false) {
     if (!isTask) {
-      groupId = await this.e.group_id; percentNum = await this.getPerMem()
+      await Bot.pickGroup(await this.e.group_id).setCard(Bot.uin, `${nikename || Bot.nickname}｜当前内存占用${await this.getPerMem()}%`)
       logger.info(`【更新群名片】更新了群${groupId}的群名片`)
+      return true
     }
     try {
       await Bot.pickGroup(groupId).setCard(Bot.uin, `${nikename || Bot.nickname}｜当前内存占用${percentNum}%`)

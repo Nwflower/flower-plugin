@@ -33,6 +33,7 @@ for (let file of files) {
 let index = { flower: {} }
 export const flower = index.flower || {}
 setTimeout(async function () {
+  await redis.del('flower:safe-ban-cd')
   let msgStr = await redis.get('flower:restart-msg')
   let relpyPrivate = async function () { }
   if (msgStr) {
