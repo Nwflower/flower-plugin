@@ -35,11 +35,19 @@ body {
 }
 
 .gacha_img {
+    position: relative;
     display: block;
     margin: 0 auto;
     height: 670px;
+    z-index: 9998;
 }
-
+.wep_back {
+    position: absolute;
+    top: 150px;
+    left: 393px;
+    max-width: 405px;
+    max-height: 371px;
+}
 .star {
     position: absolute;
     top: 410px;
@@ -59,6 +67,8 @@ body {
 }
 
 .element {
+    width: 96px;
+    height: 96px;
     max-width: 96px;
     max-height: 96px;
     position: absolute;

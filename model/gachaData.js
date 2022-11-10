@@ -172,17 +172,6 @@ export default class GachaData extends base {
    * 抽奖
    */
   lottery (save = true, single = false) {
-    /** 单抽 */
-    // if (single) {
-    //   this.user.today.num++
-    //   if (this.bailian) this.user.today.num += 9
-    //   if (!this.lottery5()) {
-    //     if (!this.lottery4()) {
-    //       this.lottery3()
-    //     }
-    //   }
-    //   if (save) this.saveUser()
-    // }
     /** 十连抽 */
     if (this.type == 'weapon') {
       this.user.today.weaponNum++
