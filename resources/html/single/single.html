@@ -7,7 +7,9 @@
 </head>
 <body>
     <div class="container" id="container">
-        <img src="{{pluResPath}}gacha/single/img/{{element}}2.png" class="wep_back" id="back">
+        {{if $type == 'weapon'}}
+            <img src="{{pluResPath}}gacha/single/img/{{element}}2.png" class="wep_back" id="back">
+        {{/if}}
         <img src="{{pluResPath}}gacha/single/{{type}}/{{star}}/{{name}}.png" class="gacha_img" id="qian">
         <img src="{{pluResPath}}gacha/single/img/{{element}}.png" class="element">
         <img src="{{pluResPath}}gacha/single/img/star-{{star}}.png" class="star">
