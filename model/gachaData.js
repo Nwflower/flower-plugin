@@ -2,7 +2,6 @@ import base from './base.js'
 import gsCfg from './gsCfg.js'
 import lodash from 'lodash'
 import moment from 'moment'
-import fetch from 'node-fetch'
 import pool from './pool.js'
 
 export default class GachaData extends base {
@@ -64,9 +63,9 @@ export default class GachaData extends base {
   get key () {
     /** 群，私聊分开 */
     if (this.e.isGroup) {
-      return `${this.prefix}${this.e.group_id}:${this.userId}`
+      return `${this.e.group_id}:${this.userId}`
     } else {
-      return `${this.prefix}private:${this.userId}`
+      return `private:${this.userId}`
     }
   }
 
@@ -479,13 +478,7 @@ export default class GachaData extends base {
   }
 
   static async getStr () {
-    global.strr = ''
-    let res = await fetch('https://gist.githubusercontent.com/Le-niao/10f061fb9fe8fcfc316c10b422ed06d1/raw/Yunzai-Bot').catch(() => {})
-    if (res && res.text) {
-      let strr = await res.text() || ''
-      if (strr.includes('html')) strr = ''
-      global.strr = strr
-    }
+    // do nothing
   }
 
   getNow () {

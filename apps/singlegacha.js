@@ -7,6 +7,7 @@ import moment from 'moment'
 import { segment } from 'oicq'
 import pool from '../model/pool.js'
 import lodash from 'lodash'
+import GachaData from '../model/gachaData.js'
 
 export class singlegacha extends plugin {
   constructor () {
@@ -34,7 +35,8 @@ export class singlegacha extends plugin {
   }
 
   async gacha () {
-    /** 默认设置 */
+    this.GachaData = await GachaData.init(this.e)
+
     this.def = gsCfg.getConfig('gacha', 'gacha')
     if (this.e.group_id) {
       this.set = gsCfg.getGachaSet(this.e.group_id)
@@ -43,8 +45,7 @@ export class singlegacha extends plugin {
     }
     await this.getPool()
     await this.userData()
-    this.lottery()
-    logger.info(this.res)
+    this.res = this.lottery()
     let recallMsg = this.set.delMsg
 
     if (!fs.existsSync(`${this._path}/plugins/flower-plugin/data/single/`)) {
@@ -62,7 +63,10 @@ export class singlegacha extends plugin {
         name: this.res.name,
         star: this.res.star,
         element: this.res.element,
-        type: this.res.type
+        type: this.res.type,
+        info: this.res.info,
+        ...this.lotteryInfo(),
+        isWeapon: (this.res.type === 'weapon')
       })
       await this.reply(base64, false, { recallMsg })
       fs.writeFileSync(`${this._path}/plugins/flower-plugin/data/single/${this.res.name}.png`, base64.file, 'base64')
@@ -92,9 +96,9 @@ export class singlegacha extends plugin {
   get key () {
     /** 群，私聊分开 */
     if (this.e.isGroup) {
-      return `${this.prefix}${this.e.group_id}:${this.userId}`
+      return `${this.e.group_id}:${this.userId}`
     } else {
-      return `${this.prefix}private:${this.userId}`
+      return `private:${this.userId}`
     }
   }
 
@@ -154,12 +158,10 @@ export class singlegacha extends plugin {
 
   /** 用户数据 */
   async userData () {
-    if (this.user) return this.user
-
-    let user = await redis.get(this.key)
+    let { user } = this.GachaData
 
     if (user) {
-      user = JSON.parse(user)
+      // user = JSON.parse(user)
       /** 重置今日数据 */
       if (this.getNow() > user.today.expire) {
         user.today = { star: [], expire: this.getEnd().end4, num: 0, weaponNum: 0 }
@@ -424,27 +426,25 @@ export class singlegacha extends plugin {
     let nowFive = 0
     let nowFour = 0
 
-    this.res.forEach((v, i) => {
-      if (v.star == 5) {
-        nowFive++
-        info = `${v.name}「${v.num}抽」`
-        if (v.isBigUP) info += '大保底'
-        if (v.isBing) info += '定轨'
-      }
-      if (v.star == 4) {
-        nowFour++
-      }
-    })
+    if (this.res.star === 5) {
+      nowFive++
+      info = `${this.res.name}「${this.res.num}抽」`
+      if (this.res.isBigUP) info += '大保底'
+      if (this.res.isBing) info += '定轨'
+    }
+    if (this.res.star === 4) {
+      nowFour++
+    }
 
     let poolName = `角色池：${gsCfg.shortName(this.pool.up5[0])}`
-    if (this.type == 'permanent') poolName = '常驻池'
+    if (this.type === 'permanent') poolName = '常驻池'
 
     let res = {
       info,
       nowFive,
       nowFour,
       poolName,
-      isWeapon: this.type == 'weapon',
+      isWeapon: this.type === 'weapon',
       bingWeapon: this.getBingWeapon(true),
       lifeNum: this.user[this.type]?.lifeNum || 0
     }
@@ -455,7 +455,8 @@ export class singlegacha extends plugin {
   }
 
   async saveUser () {
-    this.user.today.expire = this.getEnd().end4
-    await redis.setEx(this.key, 3600 * 24 * 14, JSON.stringify(this.user))
+    let Gacha = await GachaData.init(this.e)
+    Gacha.user = this.user
+    await Gacha.saveUser()
   }
 }
