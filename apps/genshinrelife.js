@@ -35,7 +35,7 @@ export class genshinrelife extends plugin {
       }
     }, cdtime * 60 * 1000)
     let file = pluginPath + '/resources/img/GenshinRelife/'
-    let number = Math.floor(Math.random() * 58.99 + 1)
+    let number = Math.floor(Math.random() * 60.99 + 1)
 
     // 发送消息
     e.reply(segment.image(file + number.toString() + '.png'))
