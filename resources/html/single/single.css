@@ -83,6 +83,7 @@ body {
     position: absolute;
     top: 357px;
     left: 95px;
+    z-index: 1;
 }
 
 .logo{
