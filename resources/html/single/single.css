@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'HYWenHei-65W';
-    src: url("../../font/HYWH-65W.ttf");
+    font-family: 'zh-cn';
+    src: url("../../font/zh-cn.ttf");
     font-weight: normal;
     font-style: normal;
 }
@@ -51,11 +51,14 @@ body {
     z-index: 2;
 }
 .wep_back {
-    position: absolute;
-    top: 150px;
-    left: 393px;
-    max-width: 405px;
-    max-height: 371px;
+    width: 500px;
+	height: 500px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
 }
 .star {
     position: absolute;
@@ -65,7 +68,7 @@ body {
 }
 
 .name {
-    font-family: HYWenHei-65W, serif;
+    font-family: zh-cn, serif;
     color: white;
     position: absolute;
     font-size: 34px;
@@ -78,8 +81,8 @@ body {
 .element {
     width: 96px;
     height: 96px;
-    max-width: 96px;
-    max-height: 96px;
+    max-width: 144px;
+    max-height: 158px;
     position: absolute;
     top: 357px;
     left: 95px;
