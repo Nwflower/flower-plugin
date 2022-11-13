@@ -48,29 +48,23 @@ export class singlegacha extends plugin {
     this.res = this.lottery()
     let recallMsg = this.set.delMsg
 
-    if (!fs.existsSync(`${this._path}/plugins/flower-plugin/data/single/`)) {
-      fs.mkdirSync(`${this._path}/plugins/flower-plugin/data/single/`)
-    }
-    if (fs.existsSync(`${this._path}/plugins/flower-plugin/data/single/${this.res.name}.png`)) {
-      await this.reply(segment.image(`${this._path}/plugins/flower-plugin/data/single/${this.res.name}.png`), false, { recallMsg })
-    } else {
-      let base64 = await puppeteer.screenshot('sysCfg', {
-        tplFile: `./plugins/flower-plugin/resources/html/${this.model}/single.html`,
-        /** 绝对路径 */
-        pluResPath: `${this._path}/plugins/flower-plugin/resources/`,
-        saveId: 'sysCfg',
-        imgType: 'png',
-        name: this.res.name,
-        star: this.res.star,
-        element: this.res.element,
-        type: this.res.type,
-        info: this.res.info,
-        ...this.lotteryInfo(),
-        isWeapon: (this.res.type === 'weapon')
-      })
-      await this.reply(base64, false, { recallMsg })
-      fs.writeFileSync(`${this._path}/plugins/flower-plugin/data/single/${this.res.name}.png`, base64.file, 'base64')
-    }
+    let base64 = await puppeteer.screenshot('sysCfg', {
+      tplFile: `./plugins/flower-plugin/resources/html/${this.model}/single.html`,
+      /** 绝对路径 */
+      pluResPath: `${this._path}/plugins/flower-plugin/resources/`,
+      saveId: 'sysCfg',
+      imgType: 'png',
+      name: this.res.name,
+      star: this.res.star,
+      element: this.res.element,
+      type: this.res.type,
+      info: this.res.info,
+      ...this.lotteryInfo(),
+      isWeapon: (this.res.type === 'weapon')
+    })
+    await this.reply(base64, false, { recallMsg })
+    fs.writeFileSync(`${this._path}/plugins/flower-plugin/data/single/${this.res.name}.png`, base64.file, 'base64')
+
     return true
   }
 

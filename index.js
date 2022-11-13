@@ -34,9 +34,6 @@ let index = { flower: {} }
 export const flower = index.flower || {}
 setTimeout(async function () {
   await redis.del('flower:safe-ban-cd')
-  await fs.readdirSync('./plugins/flower-plugin/data/single').forEach(function (fileName) {
-    fs.unlinkSync('./plugins/flower-plugin/data/single/' + fileName)
-  })
   let msgStr = await redis.get('flower:restart-msg')
   let relpyPrivate = async function () { }
   if (msgStr) {
