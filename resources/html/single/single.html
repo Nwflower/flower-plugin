@@ -9,6 +9,13 @@
   <body>
     <div class="container" id="container">
       <div class="info-bg info-count">{{info}}</div>
+      {{if isWeaponPool}}
+          <div class="info-bg poor-info">定轨：{{bingWeapon}}</div>
+          <div class="info-bg poor-bing">命定值：{{lifeNum}}</div>
+      {{else if poolName}}
+        <div class="info-bg poor-info">{{poolName}}</div>
+      {{/if}}
+
       {{if isWeapon}}
         <div>
           <img src="{{pluResPath}}gacha/single/img/{{element}}2.png" class="wep_back" id="back"/>

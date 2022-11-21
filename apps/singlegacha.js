@@ -4,7 +4,6 @@ import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 import gsCfg from '../model/gsCfg.js'
 import fs from 'fs'
 import moment from 'moment'
-import { segment } from 'oicq'
 import pool from '../model/pool.js'
 import lodash from 'lodash'
 import GachaData from '../model/gachaData.js'
@@ -18,7 +17,7 @@ export class singlegacha extends plugin {
       priority: 98,
       rule: [
         {
-          reg: '^#*单抽$',
+          reg: '^#*单抽[12武器池常驻]*$',
           fnc: 'gacha'
         }
       ]
@@ -32,6 +31,7 @@ export class singlegacha extends plugin {
     this.type = 'role'
     /** 抽卡结果 */
     this.res = []
+    this.isweaponpool = false
   }
 
   async gacha () {
@@ -43,6 +43,7 @@ export class singlegacha extends plugin {
     } else {
       this.set = this.def
     }
+    await this.getTpye()
     await this.getPool()
     await this.userData()
     this.res = this.lottery()
@@ -59,6 +60,7 @@ export class singlegacha extends plugin {
       element: this.res.element,
       type: this.res.type,
       info: this.res.info,
+      isWeaponPool: this.isweaponpool,
       ...this.lotteryInfo(),
       isWeapon: (this.res.type === 'weapon')
     })
@@ -83,6 +85,12 @@ export class singlegacha extends plugin {
     return { end, end4 }
   }
 
+  getTpye () {
+    if (this.e.msg.includes('2')) this.role2 = true
+    if (this.e.msg.includes('武器')) this.type = 'weapon'
+    if (this.e.msg.includes('常驻')) this.type = 'permanent'
+  }
+
   getWeekEnd () {
     return Number(moment().day(7).endOf('day').format('X'))
   }
@@ -105,7 +113,7 @@ export class singlegacha extends plugin {
     if (this.type === 'weapon') {
       let weapon4 = lodash.difference(this.def.weapon4, NowPool.weapon4)
       let weapon5 = lodash.difference(this.def.weapon5, NowPool.weapon5)
-
+      this.isweaponpool = true
       this.pool = {
         up4: NowPool.weapon4,
         role4: this.def.role4,
