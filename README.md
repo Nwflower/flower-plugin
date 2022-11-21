@@ -19,6 +19,9 @@ Yunzai-Bot V3 的插件包，主要提供拓展抽卡功能，旨在不修改原
 
 ### 联系方式
 #### [240979646](https://jq.qq.com/?_wv=1027&k=gxBix6w7)
+
+来[爱发电](https://afdian.net/a/Nwflower)羞辱我
+
 鸣谢
 
 | 名单      | 联系方式         | 主要贡献    |
