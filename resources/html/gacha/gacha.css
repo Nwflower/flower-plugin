@@ -4,6 +4,12 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "YS";
+  src: url("../../../../../resources/font/HYWenHei-55W.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
 * {
   margin: 0;
   padding: 0;
@@ -30,7 +36,7 @@ body {
   color: rgb(255, 255, 255);
   padding: 8px 10px;
   border-radius: 5px;
-
+  font-family: YS, 'HYWenHei-55W', 'Noto Sans CJK SC', SimHei, sans-serif;
 }
 .info-name{
   overflow: hidden;
@@ -189,4 +195,5 @@ body {
   background-color: rgba(5, 5, 5, 0.5);
   border-radius: 5px;
   white-space: nowrap;
+  font-family: YS, 'HYWenHei-55W', 'Noto Sans CJK SC', SimHei, sans-serif;
 }
