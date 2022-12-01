@@ -20,7 +20,7 @@ class GsCfg {
     /** 监听文件 */
     this.watcher = { config: {}, defSet: {} }
 
-    this.ignore = ['gacha.gacha', 'gacha.set', 'gacha.pool', 'gacha.random']
+    this.ignore = ['gacha.gacha', 'gacha.set', 'gacha.pool', 'gacha.random', 'group.name']
   }
 
   /**

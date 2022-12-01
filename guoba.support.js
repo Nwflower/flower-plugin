@@ -37,6 +37,7 @@ export function supportGuoba () {
       return getConfig(app, name)
     }
   }
+
   return {
     // 插件信息，将会显示在前端页面
     // 如果你的插件没有在插件库里，那么需要填上补充信息
@@ -205,13 +206,17 @@ export function supportGuoba () {
       // 设置配置的方法（前端点确定后调用的方法）
       setConfigData (data, { Result }) {
         let probability = getConfig('gacha', 'gacha')
+        let groupName = gsCfg.getConfig('group', 'name')
         let pool = getPool()
         for (let [keyPath, value] of Object.entries(data)) {
           switch (keyPath) {
             case 'card.set':
               if (value === 100) {
-                Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, Bot.nickname) })
+                Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, groupName.nickname) })
               }
+              break
+            case 'card.hz':
+              groupName.cd = value
               break
             case 'gacha.setchance':
               if (value === 100) {
@@ -252,6 +257,7 @@ export function supportGuoba () {
         }
         setConfig('gacha', 'gacha', probability)
         setConfig('gacha', 'pool', pool)
+        setConfig('group', 'name', groupName)
         return Result.ok({}, '设置成功~')
       }
     }

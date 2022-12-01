@@ -1,5 +1,6 @@
 import { currentVersion } from './components/Changelog.js'
 import fs from 'node:fs'
+import gsCfg from './model/gsCfg.js'
 
 logger.info('--------->_<---------')
 logger.info(`抽卡插件${currentVersion}很高兴为您服务~`)
@@ -43,5 +44,7 @@ setTimeout(async function () {
     let msgs = [`当前抽卡版本: ${currentVersion}`, '您可使用 #抽卡版本 命令查看更新信息']
     await relpyPrivate(msg.qq, msgs.join('\n'))
   }
+  let groupName = gsCfg.getConfig('group', 'name')
+  Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, groupName.nickname) })
 }, 1000)
 export { apps }

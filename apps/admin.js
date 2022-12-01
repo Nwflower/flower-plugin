@@ -73,6 +73,7 @@ export class admin extends plugin {
     let probability = getConfig('gacha', 'gacha')
     let random = getConfig('gacha', 'random')
     let star = gsCfg.getdefSet('role', 'other')
+    let groupName = gsCfg.getConfig('group', 'name')
     if (regRet[1]) {
       // 设置模式
       let val = regRet[2] || ''
@@ -194,9 +195,12 @@ export class admin extends plugin {
           break
         case 'card.hz':
           val = Math.min(1440, Math.max(0, val * 1))
+          groupName.cd = val
+          setConfig('group', 'name', groupName)
+          cfgKey = false// 取消独立验证
           break
         case 'card.set':
-          Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, Bot.nickname) })
+          Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, groupName.nickname) })
           this.reply('所有群名片已复位为' + Bot.nickname)
           return true
         default:
@@ -220,7 +224,7 @@ export class admin extends plugin {
       gachaweapon5: probability.chanceW5,
       gachaweapon4: probability.chanceW4,
       relifetime: Cfg.get('relife.time', 120),
-      cardHz: Cfg.get('card.hz', 0),
+      cardHz: groupName.cd,
       word: getStatus('word.listen', false)
     }
 
@@ -276,7 +280,7 @@ export class admin extends plugin {
       }
       e.reply('抽卡插件更新成功，正在尝试重新启动Yunzai以应用更新...')
       timer && clearTimeout(timer)
-      redis.set('gacha:restart-msg', JSON.stringify({
+      redis.set('flower:restart-msg', JSON.stringify({
         msg: '重启成功，新版抽卡插件已经生效',
         qq: e.user_id
       }), { EX: 30 })

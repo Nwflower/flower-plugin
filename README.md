@@ -31,9 +31,11 @@ Yunzai-Bot V3 的插件包，主要提供拓展抽卡功能，旨在不修改原
 
 发电榜
 
-| 名单      | 发电量 |
-|---------|--------------|
-| 归来？汐去 | 20 |
+| 名单   | 发电量  |
+|------|------|
+| 杨花洛尽 | 23.3 |
+| 归来？汐去 | 20   |
+| 寮青   | 15   |
 
 ### 使用说明
 
@@ -54,4 +56,5 @@ git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flowe
 ### 其他
 - 最后再求个star，你的支持是维护本项目的动力~~
 - 严禁用于任何商业用途和非法行为
+
 [Yunzai-Bot插件索引](https://gitee.com/Hikari666/Yunzai-Bot-plugins-index) 

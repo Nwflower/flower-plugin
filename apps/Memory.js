@@ -1,18 +1,14 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import os from 'os'
-import { Cfg } from '../components/index.js'
 import lodash from 'lodash'
 import Error from '../model/error.js'
+import gsCfg from '../model/gsCfg.js'
 
-// 命令规则
-let notGroup = Cfg.get('memory.group', []) // 不更新群名片的群组，需要手动设置，具体加群了解
-let nikename = '' // 机器人名字，留空为昵称
 let cd = 0
-let fix = 2 // 数据保留几位小数
 /**
  * 使用说明：本V3插件为自动更新群名片插件
  * 命令：#系统占用 查看目前系统占用
- * #更新群名片 手动更新机器人群名片，默认每分钟自动执行一次
+ * #更新群名片 手动更新机器人群名片，默认不执行
 ====== * **/
 export class Memory extends plugin {
   constructor () {
@@ -37,6 +33,8 @@ export class Memory extends plugin {
     Object.defineProperty(this.task, 'log', { get: () => false })
   }
 
+  get config () { return gsCfg.getConfig('group', 'name') }
+
   mapToArr (map) {
     let allGroup = []
     map.forEach((v, k) => { allGroup.push(k) })
@@ -45,33 +43,37 @@ export class Memory extends plugin {
 
   async CardTask () {
     if (await redis.get('flower:safe-ban-cd')) return true
-    let cdi = Cfg.get('card.hz', 1)
-    if (!cdi) { return true } else if (cd++ < cdi) { return true } else { cd = 0 }
+    if (!this.config.cd) { return true } else if (cd++ < this.config.cd) { return true } else { cd = 0 }
     let nowPerMem = await this.getPerMem()
-    let taskGroup = lodash.difference(this.mapToArr(Bot.gl), notGroup)
-
-    if (taskGroup.length) { for (let groupId of taskGroup) { await this.setGroupCard(groupId, nowPerMem, true) } }
+    let taskGroup = lodash.difference(this.mapToArr(Bot.gl), this.config.notGroup)
+    if (taskGroup.length) {
+      for (let groupId of taskGroup) {
+        if (!await this.setGroupCard(groupId, nowPerMem, true)) {
+          return false
+        }
+      }
+    }
     return true
   }
 
   async setGroupCard (groupId, percentNum, isTask = false) {
-    if (!isTask) {
-      await Bot.pickGroup(await this.e.group_id).setCard(Bot.uin, `${nikename || Bot.nickname}｜当前内存占用${await this.getPerMem()}%`)
-      logger.info(`【更新群名片】更新了群${groupId}的群名片`)
-      return true
+    if (isTask) {
+      try { await Bot.pickGroup(groupId).setCard(Bot.uin, `${this.config.nickname || Bot.nickname}｜当前内存占用${percentNum}%`) } catch (e) {
+        logger.error(Error.getErrorByCode(101))
+        console.log(e)
+        await redis.set('flower:safe-ban-cd', 'TRUE', { EX: 3600 * 6 })
+        return false
+      }
+    } else {
+      await Bot.pickGroup(await this.e.group_id).setCard(Bot.uin, `${this.config.nickname || Bot.nickname}｜当前内存占用${await this.getPerMem()}%`)
+      logger.info(`【更新群名片】更新了群${groupId}的群名片:${this.getPerMem()}%`)
     }
-    try {
-      await Bot.pickGroup(groupId).setCard(Bot.uin, `${nikename || Bot.nickname}｜当前内存占用${percentNum}%`)
-    } catch (e) {
-      logger.error(Error.getErrorByCode(101))
-      console.log(e)
-      await redis.set('flower:safe-ban-cd', 'TRUE', { EX: 3600 * 6 })
-    }
+    return true
   }
 
   getPerMem () {
-    const totalMem = os.totalmem(); const freeMem = os.freemem()
-    return ((1 - freeMem / totalMem) * 100).toFixed(fix).toString()
+    // const totalMem = os.totalmem(); const freeMem = os.freemem()
+    return ((1 - os.freemem() / os.totalmem()) * 100).toFixed(this.config.fix).toString()
   }
 
   async SI () {
@@ -84,7 +86,7 @@ export class Memory extends plugin {
       return G > 0 ? G + 'G' : M > 0 ? M + 'M' : KB > 0 ? KB + 'KB' : mem + 'B'
     }
     const arch = os.arch(); const kernel = os.type(); const pf = os.platform(); const totalMem = os.totalmem(); const freeMem = os.freemem(); const cpu = os.cpus()
-    let memoryUsePer = ((process.memoryUsage().rss / totalMem) * 100).toFixed(fix).toString()
+    let memoryUsePer = ((process.memoryUsage().rss / totalMem) * 100).toFixed(this.config.fix).toString()
     let CpuNumber = cpu.length; let AllHz = 0; let AllCpu = 0; let CpuSerialnNumber = 0; let times
     while (CpuNumber--) {
       times = cpu[CpuSerialnNumber].times
@@ -99,7 +101,7 @@ export class Memory extends plugin {
       `\n内存使用：${dealMem(process.memoryUsage().rss)}` + `\n内存使用率：${memoryUsePer}%`,
       '\n------处理器信息------',
       `\n共有${CpuSerialnNumber}个cpu核心,架构为${arch}\n`,
-      `CPU综合占用率${(AllCpu / AllHz * 100).toFixed(fix).toString()}%`]
+      `CPU综合占用率${(AllCpu / AllHz * 100).toFixed(this.config.fix).toString()}%`]
     return this.reply(msg, true)
   }
 }
