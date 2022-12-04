@@ -95,7 +95,7 @@ export class gacha extends plugin {
     let msg = lodash.truncate(this.e.sender.card, { length: 8 }) + '\n'
 
     if (user.today.star.length > 0) {
-      msg += '今日五星：'
+      msg += '今日抽卡已达上限\n五星：'
       if (user.today.star.length >= 4) {
         msg += `${user.today.star.length}个`
       } else {
@@ -108,7 +108,7 @@ export class gacha extends plugin {
         msg += `\n本周：${user.week.num}个五星`
       }
     } else {
-      msg += `今日已抽，累计${nowCount}抽无五星`
+      msg += `今日抽卡已达上限\n累计${nowCount}抽无五星`
     }
     this.reply(msg, false, { recallMsg: this.GachaData.set.delMsg })
     return true
