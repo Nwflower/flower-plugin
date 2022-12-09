@@ -63,9 +63,9 @@ export default class GachaData extends base {
   get key () {
     /** 群，私聊分开 */
     if (this.e.isGroup) {
-      return `${this.e.group_id}:${this.userId}`
+      return `${this.prefix}${this.e.group_id}:${this.userId}`
     } else {
-      return `private:${this.userId}`
+      return `${this.prefix}private:${this.userId}`
     }
   }
 
