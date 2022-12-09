@@ -17,7 +17,7 @@ export class wordListener extends plugin {
       dsc: '监听群聊中的违规词',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message.group',
-      priority: 9876,
+      priority: 7,
       rule: [rule, {
         reg: '^#*(解除|删除|取消|不)屏蔽(本群|全局)?(.)+',
         /** 执行方法 */
@@ -143,7 +143,7 @@ export class wordListener extends plugin {
             await this.reply('检测到违规词汇，已经制裁')
             logger.info(`检测到违禁词：${word}`)
             this.islog = true
-            return true
+            return this.islog
           }
         }
       } catch (e) {
