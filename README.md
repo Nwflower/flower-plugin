@@ -1,60 +1,75 @@
 # 抽卡插件flower-plugin
-### 介绍
-Yunzai-Bot V3 的插件包，主要提供拓展抽卡功能，旨在不修改原卡池信息的情况下提供自定义卡池的拓展
+flower-plugin是一个适用于V3版本Yunzai-Bot的原神图鉴插件包，主要提供拓展抽卡功能，意在不修改本体抽卡卡池信息的情况下提供自定义卡池的拓展
 
-### 功能一览列表
+## 功能一览列表
 | 命令| 说明|
-|---------|------------|
-| 二十连、三十连...百连| 一次性进行多次十连，大量生成图片对服务器会产生较大负载。承受不了的建议卸载插件而不是喊我想办法适配。无法使用该命令的请仔细检查抽卡数是否超过了抽数限制。 |
+|:--------|------------|
+| 百连 | 一次性进行多次十连，可能会对服务器产生较大负载。小型服务器建议卸载本插件。设置的抽数上限不足可能无法使用该命令。 |
 | 单抽 | 单抽一次指定卡池。占用一次抽卡次数。 |
-| 转生 | 转生为任意角色，类似单抽。但不会消耗任何生成图片的负载，也不会占用抽卡次数。|
-| 更新群名片 | 更新内存占用信息，不会引起风控。默认开启所有群，前缀为机器人昵称。|
+| 转生 | 转生为任意角色。不会消耗任何生成图片的负载，也不会占用抽卡次数。 |
+| 更新群名片 | 更新内存占用信息，不会引起风控。默认开启所有群，前缀为机器人昵称。支持自行配置。 |
 | 设置头衔xxx | 给群友设置头衔；只在机器人是群主时生效|
 | 谁是卧底 | 请发送`谁是卧底规则查看`|
-| #抽卡设置   | 设置抽卡的参数，如卡池角色，四星五星概率 |
-| #设置抽卡   | 管理某群抽卡时的次数等等，私聊时为全局设置|
-| #我的卡池   | 自己自定义自己的卡池|
-| 文字狱 | 只在机器人为管理员的时候生效。提供违禁词管控，命令有`#屏蔽(本群)xxx`、`#取消屏蔽(本群)xxx`、`#屏蔽词列表`。词库文件在`flower-plugin\resources\blackword`对应群号目录下，可以一键导入词库文件也可以一键删库 |
+| #抽卡设置   | 设置抽卡的参数，如卡池角色，四星五星概率。 |
+| #设置抽卡   | 管理某群抽卡时的次数等等，私聊时为全局设置。 |
+| #我的卡池   | 自己自定义自己的卡池。 |
+| 文字狱 | 只在机器人为管理员的时候生效。提供违禁词管控，命令有`#屏蔽(本群)xxx`、`#取消屏蔽(本群)xxx`、`#屏蔽词列表`。词库文件在`flower-plugin\resources\blackword`对应群号目录下，可以一键导入词库文件也可以一键删库。需要先开启该功能 |
 
-### 联系方式
-#### [240979646](https://jq.qq.com/?_wv=1027&k=gxBix6w7)
+## 反馈
 
-来[爱发电](https://afdian.net/a/Nwflower)羞辱我
+如果你需要提出issue或者PR，请前往github的相关页面。
 
-鸣谢
+[提出issue](https://github.com/Nwflower/flower-plugin/issues)
 
-| 名单      | 联系方式         | 主要贡献    |
-|---------|--------------|---------|
-| SunRy曉K | QQ1509293009 | 提供资源图片  |
-| ZDPLM   | QQ2895699730 | 提供资源图片  |
-| Pluto   | QQ717157592  | 谁是卧底.js |
+[发起PR](https://github.com/Nwflower/flower-plugin/pulls)
 
-发电榜
+当然，你也可以使用QQ群组功能反馈。**点击加入[FLOWER插件交流群](https://qm.qq.com/cgi-bin/qm/qr?k=XOTZhBWpv68F1sfsMIzKJpg28NBPKJgg&jump_from=webapi&authKey=/XagQoLiUhOi+t67MCkWOSRLlXe+ywVmrkCHdoD3CjwqNzAUYspTrqYklkwb3W0R)**。
 
-| 名单   | 发电量  |
-|------|------|
-| 杨花洛尽 | 23.3 |
-| 归来？汐去 | 20   |
-| 寮青   | 15   |
+如果你觉得本插件还行，不妨给个star或者[爱发电](https://afdian.net/a/Nwflower)，你的支持不会获得额外内容，但会提高本项目的更新积极性
 
-### 使用说明
+### 鸣谢
 
-本插件为[云崽bot](https://gitee.com/Le-niao/Yunzai-Bot)的辅助插件
-在云崽根目录下运行以下代码
-使用github
+| 名单     | 联系方式     | 主要贡献     |
+| -------- | ------------ | ------------ |
+| SunRy曉K | QQ1509293009 | 更新维护支持 |
+| ZDPLM    | QQ2895699730 | 提供资源图片 |
+| Pluto    | QQ717157592  | 谁是卧底.js  |
+
+### 发电榜
+
+| NickName   | RMB Contribution |
+| :--------- | ---------------: |
+| 杨花洛尽   |             23.3 |
+| 归来？汐去 |               20 |
+| 寮青       |               15 |
+| 溯流光     |               15 |
+| 薛皮皮     |                5 |
+
+## 获取说明
+
+使用github源获取插件
+
+在Yunzai-Bot根目录下，运行cmd，输入以下指令
+
 ```
 git clone --depth=1 https://github.com/Nwflower/flower-plugin.git ./plugins/flower-plugin/
 ```
-使用gitee
+如果运行失败，可以使用gitee镜像源，指令如下
 ```
 git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flower-plugin/
 ```
 
-### 更新
-发送命令 `#抽卡更新` 即可实现更新操作
+## 其他
+### Nwflower插件全家桶
 
-### 其他
-- 最后再求个star，你的支持是维护本项目的动力~~
-- 严禁用于任何商业用途和非法行为
+| 插件名                | 插件地址                                                  |
+| --------------------- | --------------------------------------------------------- |
+| 抽卡插件Flower-plugin | [flower-plugin](https://gitee.com/Nwflower/flower-plugin) |
+| Atlas原神图鉴         | [Atlas](https://gitee.com/Nwflower/atlas)                 |
+| 自动化插件auto-plugin | [auto-plugin](https://gitee.com/Nwflower/auto-plugin)     |
 
-[Yunzai-Bot插件索引](https://gitee.com/Hikari666/Yunzai-Bot-plugins-index) 
+### 友情链接
+
+* Yunzai-Bot插件库：[☞Github](https://github.com/yhArcadia/Yunzai-Bot-plugins-index)/[☞Gitee](https://gitee.com/yhArcadia/Yunzai-Bot-plugins-index)
+* Yunzai-Bot（V3）：[☞Github](https://github.com/Le-niao/Yunzai-Bot)/[☞Gitee](https://gitee.com/Le-niao/Yunzai-Bot) 
+* 严禁用于任何商业用途和非法行为
