@@ -8,7 +8,7 @@ export class wordListener extends plugin {
   constructor () {
     let rule = {
       /** 命令正则匹配 */
-      reg: '^[^(解除|删除|取消|屏蔽)]+',
+      reg: '^(解除|删除|取消|屏蔽)+',
       /** 执行方法 */
       fnc: 'wordsListener'
     }

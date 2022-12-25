@@ -88,31 +88,6 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'card.hz',
-          label: '群名更新频次',
-          bottomHelpMessage: '几分钟改一次，单位分钟',
-          component: 'InputNumber',
-          required: false,
-          componentProps: {
-            min: 0,
-            max: 1440,
-            placeholder: '请输入时长'
-          }
-        },
-        {
-          field: 'card.set',
-          label: '群名片复位',
-          bottomHelpMessage: '如果需要将所有的群名片恢复为机器人昵称，请将滑块滑到100%后点击保存',
-          component: 'Slider',
-          componentProps: {
-            min: 0,
-            max: 100,
-            tipFormatter: function (v) {
-              return v + '%'
-            }
-          }
-        },
-        {
           field: 'gachas.wai',
           label: '小保底概率',
           bottomHelpMessage: '小保底必中概率',
@@ -210,14 +185,6 @@ export function supportGuoba () {
         let pool = getPool()
         for (let [keyPath, value] of Object.entries(data)) {
           switch (keyPath) {
-            case 'card.set':
-              if (value === 100) {
-                Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, groupName.nickname) })
-              }
-              break
-            case 'card.hz':
-              groupName.cd = value
-              break
             case 'gacha.setchance':
               if (value === 100) {
                 probability.chance5 = 60
@@ -257,7 +224,6 @@ export function supportGuoba () {
         }
         setConfig('gacha', 'gacha', probability)
         setConfig('gacha', 'pool', pool)
-        setConfig('group', 'name', groupName)
         return Result.ok({}, '设置成功~')
       }
     }

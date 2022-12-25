@@ -24,8 +24,6 @@ let cfgMap = {
   随机卡池: 'gacha.random',
   卡池同步: 'gacha.get',
   转生间隔: 'relife.time',
-  群名片频率: 'card.hz',
-  群名片复位: 'card.set',
   违禁词: 'word.listen',
   屏蔽词: 'word.listen'
 }
@@ -73,7 +71,6 @@ export class admin extends plugin {
     let probability = getConfig('gacha', 'gacha')
     let random = getConfig('gacha', 'random')
     let star = gsCfg.getdefSet('role', 'other')
-    let groupName = gsCfg.getConfig('group', 'name')
     if (regRet[1]) {
       // 设置模式
       let val = regRet[2] || ''
@@ -193,16 +190,6 @@ export class admin extends plugin {
         case 'relife.time':
           val = Math.min(1440, Math.max(1, val * 1))
           break
-        case 'card.hz':
-          val = Math.min(1440, Math.max(0, val * 1))
-          groupName.cd = val
-          setConfig('group', 'name', groupName)
-          cfgKey = false// 取消独立验证
-          break
-        case 'card.set':
-          Bot.gl.forEach((v, k) => { Bot.pickGroup(k).setCard(Bot.uin, groupName.nickname) })
-          this.reply('所有群名片已复位为' + Bot.nickname)
-          return true
         default:
           val = !/关闭/.test(val)
           break
@@ -224,7 +211,6 @@ export class admin extends plugin {
       gachaweapon5: probability.chanceW5,
       gachaweapon4: probability.chanceW4,
       relifetime: Cfg.get('relife.time', 120),
-      cardHz: groupName.cd,
       word: getStatus('word.listen', false)
     }
 
