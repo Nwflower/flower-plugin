@@ -1,6 +1,5 @@
 import { currentVersion } from './components/Changelog.js'
 import fs from 'node:fs'
-import gsCfg from './model/gsCfg.js'
 
 logger.info('--------- >_< ---------')
 logger.info(`抽卡插件${currentVersion}很高兴为您服务~`)
