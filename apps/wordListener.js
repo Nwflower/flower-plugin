@@ -83,9 +83,9 @@ export class wordListener extends plugin {
     }
     // 获取全局违禁词
     words = []
-    if (fs.existsSync(groupPath)) {
+    if (fs.existsSync(globalPath)) {
       files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
-      for (let file of files) { words = lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
+      for (let file of files) { words =lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
     }
     forWordMsg.push({
       message: `全局屏蔽词如下，共 ${words.length} 个`,
