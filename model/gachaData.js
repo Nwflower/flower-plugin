@@ -463,7 +463,7 @@ export default class GachaData extends base {
       nowFour,
       poolName,
       isWeapon: this.type == 'weapon',
-      bingWeapon: this.getBingWeapon(true),
+      bingWeapon: this.getBingWeapon(),
       lifeNum: this.user[this.type]?.lifeNum || 0
     }
 
