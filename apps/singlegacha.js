@@ -35,8 +35,8 @@ export class singlegacha extends plugin {
   }
 
   init () {
-    if (!fs.existsSync('${this._path}/plugins/flower-plugin/data/single/')){
-      fs.mkdirSync('${this._path}/plugins/flower-plugin/data/single/', { recursive: true });
+    if (!fs.existsSync(`${this._path}/plugins/flower-plugin/data/single/`)){
+      fs.mkdirSync(`${this._path}/plugins/flower-plugin/data/single/`, { recursive: true });
     }
   }
 
