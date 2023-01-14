@@ -34,6 +34,12 @@ export class singlegacha extends plugin {
     this.isweaponpool = false
   }
 
+  init () {
+    if (!fs.existsSync('${this._path}/plugins/flower-plugin/data/single/')){
+      fs.mkdirSync('${this._path}/plugins/flower-plugin/data/single/', { recursive: true });
+    }
+  }
+
   async gacha () {
     this.GachaData = await GachaData.init(this.e)
 
