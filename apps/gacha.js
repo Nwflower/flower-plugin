@@ -8,7 +8,7 @@ import { Cfg } from '../components/index.js'
 export class gacha extends plugin {
   constructor () {
     super({
-      name: '十连',
+      name: '[抽卡插件]十连',
       dsc: '模拟抽卡，每天十连一次，四点更新',
       event: 'message',
       priority: 99,
