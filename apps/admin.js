@@ -22,7 +22,8 @@ let cfgMap = {
   五星武器: 'genshin.w5',
   四星武器: 'genshin.w4',
   随机卡池: 'gacha.random',
-  卡池同步: 'gacha.get',
+  卡池同步: 'gacha.get.old',
+  卡池自动同步: 'gacha.get',
   转生间隔: 'relife.time',
   违禁词: 'word.listen',
   屏蔽词: 'word.listen'
@@ -178,6 +179,8 @@ export class admin extends plugin {
           setConfig('gacha', 'pool', pool)
           cfgKey = false// 取消独立验证
           break
+        case 'gacha.get.old':
+          cfgKey = false// 取消独立验证
         case 'gacha.get':
           // eslint-disable-next-line no-case-declarations
           let poolArr = gsCfg.getdefSet('gacha', 'pool')
@@ -185,7 +188,6 @@ export class admin extends plugin {
           /** 获取设置卡池 */
           pool = poolArr.find((val) => new Date().getTime() <= new Date(val.endTime).getTime()) || poolArr.pop()
           setConfig('gacha', 'pool', pool)
-          cfgKey = false// 取消独立验证
           break
         case 'relife.time':
           val = Math.min(1440, Math.max(1, val * 1))
@@ -205,6 +207,7 @@ export class admin extends plugin {
 
     let cfg = {
       gachadiy: getStatus('gacha.diy', true),
+      gachaget: getStatus('gacha.get', false),
       gachawai: probability.wai,
       gachacharact5: probability.chance5,
       gachacharact4: probability.chance4,

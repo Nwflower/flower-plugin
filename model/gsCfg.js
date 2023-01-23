@@ -1,6 +1,7 @@
 import YAML from 'yaml'
 import chokidar from 'chokidar'
 import fs from 'node:fs'
+import { Cfg } from "../components/index.js";
 
 /** 配置文件 */
 class GsCfg {
@@ -171,7 +172,14 @@ class GsCfg {
       fs.writeFileSync(`${this.configPath}${app}.${name}.yaml`, YAML.stringify(allPool[0], null, '\t'))
       return allPool[0]
     } else {
-      return YAML.parse(fs.readFileSync(`${this.configPath}${app}.${name}.yaml`, 'utf8'))
+      let pool = YAML.parse(fs.readFileSync(`${this.configPath}${app}.${name}.yaml`, 'utf8'))
+      if (Cfg.get('gacha.get', false)){
+        let poolArr = this.getdefSet('gacha', 'pool')
+        poolArr = [...poolArr].reverse()
+        /** 获取设置卡池 */
+        pool = poolArr.find((val) => new Date().getTime() <= new Date(val.endTime).getTime()) || poolArr.pop()
+      }
+      return pool
     }
   }
 

@@ -162,16 +162,9 @@ export function supportGuoba () {
         },
         {
           field: 'gacha.get',
-          label: '卡池同步',
-          bottomHelpMessage: '如果需要将卡池同步成云崽默认卡池，请将滑块滑到100%后点击保存',
-          component: 'Slider',
-          componentProps: {
-            min: 0,
-            max: 100,
-            tipFormatter: function (v) {
-              return v + '%'
-            }
-          }
+          label: '卡池自动同步',
+          bottomHelpMessage: '抽卡前检查卡池是否正确',
+          component: 'Switch'
         }
       ],
       // 获取配置数据方法（用于前端填充显示数据）
@@ -208,15 +201,6 @@ export function supportGuoba () {
               break
             case 'gachas.wai':
               probability.wai = getValMath(value, 0, 100)
-              break
-            case 'gacha.get':
-              if (value === 100) {
-                // eslint-disable-next-line no-case-declarations
-                let poolArr = gsCfg.getdefSet('gacha', 'pool')
-                poolArr = [...poolArr].reverse()
-                pool = poolArr.find((val) => new Date().getTime() <= new Date(val.endTime).getTime()) || poolArr.pop()
-                setConfig('gacha', 'pool', pool)
-              }
               break
             default:
               Cfg.set(keyPath, value)
