@@ -2,7 +2,7 @@
 import fs from 'fs'
 import YAML from 'yaml'
 import lodash from 'lodash'
-import Cfg from '../components/Cfg.js'
+import setting from "../model/setting.js";
 
 export class wordListener extends plugin {
   constructor () {
@@ -13,7 +13,7 @@ export class wordListener extends plugin {
       fnc: 'wordsListener'
     }
     super({
-      name: '违规词监听',
+      name: '抽卡插件违规词监听',
       dsc: '监听群聊中的违规词',
       /** https://oicqjs.github.io/oicq/#events */
       event: 'message.group',
@@ -34,7 +34,8 @@ export class wordListener extends plugin {
     this._path = process.cwd().replace(/\\/g, '/')
     this.wordResPath = `${this._path}/plugins/flower-plugin/resources/blackword`
     this.islog = false
-    this.nock = Cfg.get('word.listen', false)
+    this.config = setting.getConfig('wordListener')
+    this.nock = this.config.enable
     Object.defineProperty(rule, 'log', {
       get: () => this.islog
     })

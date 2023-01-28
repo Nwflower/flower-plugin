@@ -4,7 +4,7 @@ import lodash from 'lodash'
 export class setTitle extends plugin {
   constructor () {
     super({
-      name: '设置头衔',
+      name: '抽卡插件设置头衔',
       dsc: '简单开发示例',
       event: 'message',
       priority: 1710,

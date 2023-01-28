@@ -4,7 +4,7 @@ import os from 'os'
 export class Memory extends plugin {
   constructor () {
     super({
-      name: '系统占用',
+      name: '抽卡插件系统占用',
       dsc: '检测系统占用',
       event: 'message',
       priority: 1709,

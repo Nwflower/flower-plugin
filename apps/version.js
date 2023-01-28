@@ -1,6 +1,6 @@
 /** 导入plugin */
 import plugin from '../../../lib/plugins/plugin.js'
-import { currentVersion, changelogs, yunzaiVersion } from '../components/Changelog.js'
+import { currentVersion, changelogs } from '../model/Changelog.js'
 import puppeteer from '../../../lib/puppeteer/puppeteer.js'
 
 export class version extends plugin {
@@ -31,11 +31,10 @@ export class version extends plugin {
       saveId: 'version',
       currentVersion,
       changelogs,
-      elem: 'cryo',
       defaultLayout: layoutPath + 'default.html',
       elemLayout: layoutPath + 'elem.html',
       sys: {
-        copyright: `Created By Yunzai-Bot<span class="version">${yunzaiVersion}</span> & Flower-Plugin<span class="version">${currentVersion}</span>`
+        copyright: `Created By Yunzai-Bot & Flower-Plugin<span class="version">${currentVersion}</span>`
       }
     })
     await this.reply(versionImg, false, 110)

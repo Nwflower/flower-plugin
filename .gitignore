@@ -1,6 +1,8 @@
 *.psd
 .idea
-/components/cfg.json
 *.css.map
 /config/*.yaml
+/data/**
 /resources/blackword/**
+/GachaMOD/*/config/**
+/GachaMOD/*/data/**

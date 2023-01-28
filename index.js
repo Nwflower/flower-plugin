@@ -1,5 +1,7 @@
-import { currentVersion } from './components/Changelog.js'
 import fs from 'node:fs'
+import { pluginName } from "./model/path.js";
+import { currentVersion } from "./model/Changelog.js";
+import common from "../../lib/common/common.js";
 
 logger.info('--------- >_< ---------')
 logger.info(`抽卡插件${currentVersion}很高兴为您服务~`)
@@ -23,27 +25,37 @@ if (Math.floor(Math.random()*100)<5){
     '888        88888888  "Y88888P"    "Y8888P88   8888888   888    Y888 \n')
 }
 
-const files = fs
-  .readdirSync('./plugins/flower-plugin/apps')
-  .filter((file) => file.endsWith('.js'))
-
+const syncFiles = fs.readdirSync(`./plugins/${pluginName}/GachaMOD`)
 let apps = {}
-for (let file of files) {
-  let name = file.replace('.js', '')
-  apps[name] = (await import(`./apps/${file}`))[name]
+
+
+const appfiles = fs
+  .readdirSync(`./plugins/${pluginName}/apps`)
+  .filter((file) => file.endsWith('.js'))
+for (let appfile of appfiles) {
+  let name = appfile.replace('.js', '')
+  apps[name] = (await import(`./apps/${appfile}`))[name]
 }
-let index = { flower: {} }
-export const flower = index.flower || {}
+
+for (let sync of syncFiles) {
+  const files = fs
+    .readdirSync(`./plugins/${pluginName}/GachaMOD/${sync}/apps`)
+    .filter((file) => file.endsWith('.js'))
+  for (let file of files) {
+    let name = file.replace('.js', '')
+    apps[name] = (await import(`./GachaMOD/${sync}/apps/${file}`))[name]
+  }
+}
+
 setTimeout(async function () {
-  await redis.del('flower:safe-ban-cd')
   let msgStr = await redis.get('flower:restart-msg')
-  let relpyPrivate = async function () { }
   if (msgStr) {
     let msg = JSON.parse(msgStr)
-    await relpyPrivate(msg.qq, msg.msg)
+    await common.relpyPrivate(msg.qq, msg.msg)
     await redis.del('flower:restart-msg')
     let msgs = [`当前抽卡版本: ${currentVersion}`, '您可使用 #抽卡版本 命令查看更新信息']
-    await relpyPrivate(msg.qq, msgs.join('\n'))
+    await common.relpyPrivate(msg.qq, msgs.join('\n'))
   }
 }, 1000)
+
 export { apps }

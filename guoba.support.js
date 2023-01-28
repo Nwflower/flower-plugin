@@ -1,47 +1,9 @@
-import { Cfg } from '../flower-plugin/components/index.js'
-import fs from 'fs'
-import YAML from 'yaml'
-import gsCfg from './model/gsCfg.js'
+import setting, {setting as pluginSetting} from './GachaMOD/Genshin/model/setting.js'
+import lodash from "lodash";
 
-// 支持锅巴
+
 export function supportGuoba () {
-  let defSetPath = './plugins/flower-plugin/defSet/'
-  let configPath = './plugins/flower-plugin/config/'
-  const getConfig = function (app, name) {
-    let defp = `${defSetPath}${app}/${name}.yaml`
-    if (!fs.existsSync(`${configPath}${app}.${name}.yaml`)) {
-      fs.copyFileSync(defp, `${configPath}${app}.${name}.yaml`)
-    }
-    let conf = `${configPath}${app}.${name}.yaml`
-
-    try {
-      return YAML.parse(fs.readFileSync(conf, 'utf8'))
-    } catch (error) {
-      logger.error(`[${app}][${name}] 格式错误 ${error}`)
-      return false
-    }
-  }
-  const getValMath = function (val, min, max) {
-    return Math.min(max, Math.max(min, val * 1))
-  }
-  const setConfig = function (app, name, yamlObject) {
-    fs.writeFileSync(`${configPath}${app}.${name}.yaml`, YAML.stringify(yamlObject, null, '\t'))
-  }
-  const getPool = function () {
-    let app = 'gacha'; let name = 'pool'
-    if (!fs.existsSync(`${configPath}${app}.${name}.yaml`)) {
-      let allPool = YAML.parse(fs.readFileSync(`${defSetPath}${app}/${name}.yaml`, 'utf8'))
-      setConfig(app, name, allPool[0])
-      return allPool[0]
-    } else {
-      return getConfig(app, name)
-    }
-  }
-
   return {
-    // 插件信息，将会显示在前端页面
-    // 如果你的插件没有在插件库里，那么需要填上补充信息
-    // 如果存在的话，那么填不填就无所谓了，填了就以你的信息为准
     pluginInfo: {
       name: 'flower-plugin',
       title: '抽卡插件',
@@ -50,33 +12,26 @@ export function supportGuoba () {
       link: 'https://github.com/Nwflower/flower-plugin',
       isV3: true,
       isV2: false,
-      description: '百连、单抽、转生、更新群名片、设置头衔xxx、谁是卧底、#抽卡设置、#设置抽卡、#我的卡池、文字狱',
-      // 显示图标，此为个性化配置
-      // 图标可在 https://icon-sets.iconify.design 这里进行搜索
+      description: '集百连与单抽于一体的综合性模拟抽卡插件',
       icon: 'iconoir:3d-three-pts-box',
-      // 图标颜色，例：#FF0000 或 rgb(255, 0, 0)
       iconColor: '#d19f56'
-      // 如果想要显示成图片，也可以填写图标路径（绝对路径）
-      // iconPath: path.join(process.cwd().replace(/\\/g, '/'), '/plugins/flower-plugin/resources/images/icon.png')
     },
-    // 配置项信息
     configInfo: {
-      // 配置项 schemas
       schemas: [
         {
-          field: 'gacha.diy',
+          field: 'gacha.enable',
           label: '自定义抽卡',
           bottomHelpMessage: '使用抽卡插件的抽卡服务',
           component: 'Switch'
         },
         {
-          field: 'word.listen',
+          field: 'wordListener.enable',
           label: '违禁词',
           bottomHelpMessage: '开启违禁词监听',
           component: 'Switch'
         },
         {
-          field: 'relife.time',
+          field: 'gacha.relifeCD',
           label: '转生CD',
           bottomHelpMessage: 'CD时长，单位分钟',
           component: 'InputNumber',
@@ -88,7 +43,7 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'gachas.wai',
+          field: 'gacha.wai',
           label: '小保底概率',
           bottomHelpMessage: '小保底必中概率',
           component: 'InputNumber',
@@ -100,7 +55,7 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'gachas.chance5',
+          field: 'gacha.chance5',
           label: '五星角色概率',
           bottomHelpMessage: '角色池5星的出货概率，0-10000',
           component: 'InputNumber',
@@ -112,7 +67,7 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'gachas.chance4',
+          field: 'gacha.chance4',
           label: '四星角色概率',
           bottomHelpMessage: '角色池4星的出货概率，0-10000',
           component: 'InputNumber',
@@ -124,7 +79,7 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'gachas.chanceW5',
+          field: 'gacha.chanceW5',
           label: '五星武器概率',
           bottomHelpMessage: '武器池5星的出货概率，0-10000',
           component: 'InputNumber',
@@ -136,7 +91,7 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'gachas.chanceW4',
+          field: 'gacha.chanceW4',
           label: '四星武器概率',
           bottomHelpMessage: '武器池4星的出货概率，0-10000',
           component: 'InputNumber',
@@ -161,53 +116,42 @@ export function supportGuoba () {
           }
         },
         {
-          field: 'gacha.get',
+          field: 'gacha.sync',
           label: '卡池自动同步',
           bottomHelpMessage: '抽卡前检查卡池是否正确',
           component: 'Switch'
         }
       ],
-      // 获取配置数据方法（用于前端填充显示数据）
+
       getConfigData () {
-        return Cfg.merged()
+        let pluginConfig = pluginSetting.merge()
+        return lodash.merge(setting.merge(),pluginConfig)
       },
-      // 设置配置的方法（前端点确定后调用的方法）
+
       setConfigData (data, { Result }) {
-        let probability = getConfig('gacha', 'gacha')
-        let groupName = gsCfg.getConfig('group', 'name')
-        let pool = getPool()
+        let allConfig = setting.merge()
         for (let [keyPath, value] of Object.entries(data)) {
+          if (keyPath === 'wordListener.enable') {
+            let config = pluginSetting.getConfig('wordListener')
+            config.enable = value
+            pluginSetting.setConfig('wordListener',config)
+            continue
+          }
           switch (keyPath) {
             case 'gacha.setchance':
               if (value === 100) {
-                probability.chance5 = 60
-                probability.chance4 = 510
-                probability.chanceW5 = 70
-                probability.chanceW4 = 600
-                probability.wai = 50
+                lodash.set(allConfig, 'gacha.chance5', '60')
+                lodash.set(allConfig, 'gacha.chanceW5', '70')
+                lodash.set(allConfig, 'gacha.chance4', '510')
+                lodash.set(allConfig, 'gacha.chanceW4', '600')
+                lodash.set(allConfig, 'gacha.wai', '50')
               }
               break
-            case 'gachas.chance5':
-              probability.chance5 = getValMath(value, 0, 10000)
-              break
-            case 'gachas.chance4':
-              probability.chance4 = getValMath(value, 0, 10000)
-              break
-            case 'gachas.chanceW5':
-              probability.chanceW5 = getValMath(value, 0, 10000)
-              break
-            case 'gachas.chanceW4':
-              probability.chanceW4 = getValMath(value, 0, 10000)
-              break
-            case 'gachas.wai':
-              probability.wai = getValMath(value, 0, 100)
-              break
             default:
-              Cfg.set(keyPath, value)
+              lodash.set(allConfig, keyPath, value)
           }
         }
-        setConfig('gacha', 'gacha', probability)
-        setConfig('gacha', 'pool', pool)
+        setting.analysis(allConfig)
         return Result.ok({}, '设置成功~')
       }
     }
