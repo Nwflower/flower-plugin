@@ -1,6 +1,7 @@
 import base from "./base.js";
 import setting from "./setting.js";
 import moment from "moment";
+import lodash from 'lodash'
 
 export default class Coin extends base {
   constructor (e) {
@@ -48,7 +49,7 @@ export default class Coin extends base {
 
   async setCoinConfig (groupID, sort = 'pink', num = 10){
     let config = setting.getConfig('coin')
-    config[groupID][sort] = num
+    lodash.set(config, `${groupID}.${sort}`, num)
     setting.setConfig('coin', config)
   }
 

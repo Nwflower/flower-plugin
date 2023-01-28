@@ -6,7 +6,7 @@ import Coin from "../model/coin.js";
 import GsCfg from "../../../../genshin/model/gsCfg.js";
 
 let cfgMap = {
-  蓝球: 'bule',
+  蓝球: 'blue',
   粉球: 'pink',
   撤回时间: 'delMsg'
 }
@@ -44,10 +44,10 @@ export class times extends plugin {
     let groupset = await GsCfg.getConfig('gacha','set')
     if (e.isGroup) {
       if (groupset[ob] === undefined) {
-        groupset[ob] = set
+        groupset[ob] = groupset.default
       }
       if (groupset[ob].delMsg === undefined) {
-        groupset[ob].delMsg = set.delMsg
+        groupset[ob].delMsg = groupset.default.delMsg
       }
     }
 
@@ -58,7 +58,10 @@ export class times extends plugin {
       let cfgKey = cfgMap[regRet[1]]
 
       switch (cfgKey) {
-        case 'bule':
+        case 'blue':
+          val = Math.min(10000, Math.max(1, val * 1))
+          await coin.setCoinConfig(ob, cfgKey, val)
+          break
         case 'pink':
           val = Math.min(10000, Math.max(1, val * 1))
           await coin.setCoinConfig(ob, cfgKey, val)
@@ -69,7 +72,7 @@ export class times extends plugin {
           break
       }
     }
-    let coinConfig = await coin.getCoinConfig(ob)
+    let coinConfig = { ...await coin.getCoinConfig(ob),...await coin.getCoinConfig(ob)}
     let msgs = [
       `当前本群每日粉球：${coinConfig.pink}，修改命令#设置抽卡粉球100`,
       `当前本群每日蓝球：${coinConfig.blue}，修改命令#设置抽卡蓝球10`,
