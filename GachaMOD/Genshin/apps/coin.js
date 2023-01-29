@@ -26,7 +26,7 @@ export class coin extends plugin {
     // 初始化配置文件
     if (!this.appconfig.enable) { return false; }
     this.Coin = await Coin.init(this.e)
-    let coin = await this.Coin.getCoin('role', 0)
+    let coin = await this.Coin.getCoin()
     await this.e.reply(`今日你还有${coin.pink}个纠缠之缘和${coin.blue}个相遇之缘`)
     return true
   }
