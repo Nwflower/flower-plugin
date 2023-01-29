@@ -1,0 +1,117 @@
+@font-face {
+    font-family: 'tttgbnumber';
+    src: url("../../../../../resources/font/tttgbnumber.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "YS";
+    src: url("../../../../../resources/font/HYWH-65W.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "NZBZ";
+    src: url("../../../../../resources/font/NZBZ.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "SYST";
+    src: url("../../../../../resources/font/SHCN-Bold.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    transform-origin: 0 0;
+    position: absolute;
+}
+
+.container {
+    width: 1630px;
+    height: 777px;
+    background-size: 100% 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+}
+
+
+.info-bg{
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,100), rgba(255,255,255,100), rgba(255,255,255,0));
+    font-size: 65px;
+    text-align:center;
+    position: fixed;
+    width: 650px;
+    left: 88px;
+}
+
+.common-text{
+    -webkit-text-stroke: 1px #FFFFFF;
+    top: 8px;
+    left: 85px;
+}
+
+.info-title{
+    top: 65px;
+    font-family: NZBZ, YS, sans-serif;
+}
+
+
+.info-hang1{
+    top: 520px;
+    font-size: 38px;
+    font-family: SYST, sans-serif;
+}
+.info-hang2{
+    top: 600px;
+    font-size: 38px;
+    font-family: SYST, sans-serif;
+}
+
+.info-hang3{
+    top: 680px;
+    font-size: 38px;
+    font-family: SYST, sans-serif;
+}
+
+.name {
+    font-size: 100px;
+    top: 380px;
+    left: 173px;
+    -webkit-text-stroke: 1px #FFFFFF;
+}
+
+.logo{
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    color: rgb(255 255 255 / 25%);
+    font-size: 24px;
+    font-family: tttgbnumber, serif;
+    z-index: 1000;
+}
+
+.character {
+    position: relative;
+    display: table-cell;
+    text-align:center;
+    margin: -50px 350px auto;
+    height: 880px;
+    max-height: 880px;
+}

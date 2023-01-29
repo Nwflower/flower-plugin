@@ -1,8 +1,11 @@
 import plugin from '../../../../../lib/plugins/plugin.js'
-import { segment } from 'oicq'
 import setting from "../model/setting.js";
 import fs from "node:fs";
 import { modResources } from "../model/MODpath.js";
+import puppeteer from "../../../../../lib/puppeteer/puppeteer.js";
+import YAML from "yaml";
+import GsCfg from "../../../../genshin/model/gsCfg.js";
+import { _path } from "../../../model/path.js";
 
 let CD = {}
 export class genshinrelife extends plugin {
@@ -25,6 +28,7 @@ export class genshinrelife extends plugin {
   get appconfig() { return setting.getConfig("gacha") }
 
   async relife (e) {
+    // 校验CD和权限
     let cdtime = this.appconfig['relifeCD']
     if (CD[e.user_id] && !e.isMaster) {
       e.reply('每' + cdtime + '分钟只能投胎一次哦！')
@@ -34,10 +38,50 @@ export class genshinrelife extends plugin {
     CD[e.user_id] = setTimeout(() => {
       if (CD[e.user_id]) delete CD[e.user_id]
     }, cdtime * 60 * 1000)
-    const files = fs.readdirSync(`${modResources}/GenshinRelife/`)
-    let number = Math.floor(Math.random() * files.length)
-    await this.reply(segment.image(`${modResources}/GenshinRelife/${files[number]}`))
 
+
+    // 随机获取角色名
+    let identities = YAML.parse(fs.readFileSync(`${modResources}/yaml/identity.yaml`,'utf-8'))
+    let characterList = Object.keys(identities)
+    let character = characterList[Math.floor(Math.random()*characterList.length)]
+
+    if (!fs.existsSync(`${_path}/plugins/miao-plugin/resources/meta/character/${character}/data.json`)) {
+      logger.error('【抽卡插件】转生功能需要安装 喵喵插件 才能正常使用。')
+      return false
+    }
+
+    // 获取身份
+    let identity = identities[character]
+
+    // 获取神之眼
+    let element = GsCfg.getElementByRoleName(character)
+
+    // 获取称号
+    let data = JSON.parse(fs.readFileSync(`${_path}/plugins/miao-plugin/resources/meta/character/${character}/data.json`,'utf-8'))
+    let title = data.title
+
+    // 角色列表
+    let otherList =await GsCfg.getdefSet('role','other')
+    let id = await GsCfg.roleNameToID(character)
+
+    let star = (otherList.five.includes(parseInt(id)))? 5:4
+    let colorData = YAML.parse(fs.readFileSync(`${modResources}/yaml/color.yaml`,'utf-8'))
+    let color = colorData[element]
+
+    let base64 = await puppeteer.screenshot('flower-plugin', {
+      tplFile: `./plugins/flower-plugin/GachaMOD/Genshin/resources/html/relife/relife.html`,
+      pluResPath: `${_path}/plugins/flower-plugin/GachaMOD/Genshin/resources/`,
+      saveId: 'genshinrelife',
+      imgType: 'png',
+      identity,
+      title,
+      element,
+      color,
+      character,
+      star,
+      card: `${_path}/plugins/miao-plugin/resources/meta/character/${character}/imgs/card.webp`,
+    })
+    await this.reply(base64)
     return true
   }
 }
