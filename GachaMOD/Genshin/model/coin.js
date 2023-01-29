@@ -18,21 +18,21 @@ export default class Coin extends base {
     return coin
   }
 
-  async useCoin (type = 'role', num = 10){
+  async useCoin (type = 'role', num = 10,feature = 1){
     let coin = await this.getCoin()
     let flag = true
-    // 主人不限制
-    if (this.e.isMaster){ return true }
+    // 主人消耗系数为-1，不减反增
+    if (this.e.isMaster){ feature = -1 }
     if (type === 'permanent') {
       if(coin.blue - num >= 0) {
-        coin.blue -= num
+        coin.blue -= (num * feature)
       } else {
         await this.e.reply(`你的相遇之缘不足。需要${num}个，你还有${coin.blue}个。`)
         flag = false
       }
     } else {
       if(coin.pink - num >= 0) {
-        coin.pink -= num
+        coin.pink -= (num * feature)
       } else {
         await this.e.reply(`你的纠缠之缘不足。需要${num}个，你还有${coin.pink}个。`)
         flag = false
@@ -76,7 +76,9 @@ export default class Coin extends base {
 
   async receive () {
     await this.e.reply(`今日成功领取${this.config.pink}个纠缠之缘和${this.config.blue}个相遇之缘`)
-    return {  pink: this.config.pink , blue: this.config.blue, expire: this.getEnd().end4}
+    this.user = {  pink: this.config.pink , blue: this.config.blue, expire: this.getEnd().end4}
+    await this.saveUser()
+    return this.user
   }
 
   async saveUser () {
