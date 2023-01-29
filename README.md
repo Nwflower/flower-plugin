@@ -53,7 +53,7 @@ git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flowe
 
 | 名单     | 联系方式     | 主要贡献     |
 | -------- | ------------ | ------------ |
-| SunRy曉K | QQ1509293009 | 更新维护支持 |
+| SunRyK曉K | QQ1509293009 | 更新维护支持 |
 | ZDPLM    | QQ2895699730 | 提供资源图片 |
 | Pluto    | QQ717157592  | 谁是卧底.js  |
 
