@@ -31,6 +31,30 @@ export function supportGuoba () {
           component: 'Switch'
         },
         {
+          field: 'coin.default.pink',
+          label: '每日纠缠之缘',
+          bottomHelpMessage: '全局通用',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: 0,
+            max: 10000,
+            placeholder: '请输入数量'
+          }
+        },
+        {
+          field: 'coin.default.blue',
+          label: '每日相遇之缘',
+          bottomHelpMessage: '全局通用',
+          component: 'InputNumber',
+          required: true,
+          componentProps: {
+            min: 0,
+            max: 10000,
+            placeholder: '请输入数量'
+          }
+        },
+        {
           field: 'gacha.relifeCD',
           label: '转生CD',
           bottomHelpMessage: 'CD时长，单位分钟',
