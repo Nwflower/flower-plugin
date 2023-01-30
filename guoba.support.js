@@ -26,9 +26,21 @@ export function supportGuoba () {
         },
         {
           field: 'wordListener.enable',
-          label: '违禁词',
+          label: '违禁词开关',
           bottomHelpMessage: '开启违禁词监听',
           component: 'Switch'
+        },
+        {
+          field: 'wordListener.time',
+          label: '违禁词禁言时长',
+          bottomHelpMessage: '禁言时长，秒',
+          component: 'InputNumber',
+          required: false,
+          componentProps: {
+            min: 1,
+            max: 86400,
+            placeholder: '请设置时长'
+          }
         },
         {
           field: 'coin.default.pink',
@@ -158,6 +170,12 @@ export function supportGuoba () {
           if (keyPath === 'wordListener.enable') {
             let config = pluginSetting.getConfig('wordListener')
             config.enable = value
+            pluginSetting.setConfig('wordListener',config)
+            continue
+          }
+          if (keyPath === 'wordListener.time') {
+            let config = pluginSetting.getConfig('wordListener')
+            config.time = value
             pluginSetting.setConfig('wordListener',config)
             continue
           }

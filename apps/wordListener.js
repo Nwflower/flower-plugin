@@ -7,9 +7,7 @@ import setting from "../model/setting.js";
 export class wordListener extends plugin {
   constructor () {
     let rule = {
-      /** 命令正则匹配 */
       reg: '.*',
-      /** 执行方法 */
       fnc: 'wordsListener'
     }
     super({
@@ -20,11 +18,9 @@ export class wordListener extends plugin {
       priority: 7,
       rule: [rule, {
         reg: '^#*(解除|删除|取消|不)屏蔽(本群|全局)?(.)+',
-        /** 执行方法 */
         fnc: 'delBlackWord'
       }, {
         reg: '^#*屏蔽(本群|全局)?[^(词列表)](.)*',
-        /** 执行方法 */
         fnc: 'addBlackWord'
       }, {
         reg: '^#*屏蔽词列表',
@@ -140,8 +136,8 @@ export class wordListener extends plugin {
         for (let word of wordlist) {
           if (receivedMsg.includes(word) && word) {
             this.e.group.recallMsg(this.e.message_id)
-            await this.e.group.muteMember(this.e.sender.user_id, 1)
-            await this.reply('检测到违规词汇，已经制裁')
+            await this.e.group.muteMember(this.e.sender.user_id, Number(this.config.time))
+            await this.reply(this.config['replyText'])
             logger.info(`检测到违禁词：${word}`)
             this.islog = true
             return this.islog
