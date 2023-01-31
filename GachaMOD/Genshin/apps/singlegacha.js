@@ -66,9 +66,7 @@ export class singlegacha extends plugin {
     return true
   }
 
-  getNow () {
-    return moment().format('X')
-  }
+  getNow () { return moment().format('X') }
 
   getEnd () {
     let end = moment().endOf('day').format('X')
@@ -91,51 +89,8 @@ export class singlegacha extends plugin {
     return Number(moment().day(7).endOf('day').format('X'))
   }
 
-  /** 奖池数据 */
   async getPool () {
-    let NowPool = pool.getPool(this.e.user_id)
-
-    if (this.type === 'weapon') {
-      let weapon4 = lodash.difference(this.def.weapon4, NowPool.weapon4)
-      let weapon5 = lodash.difference(this.def.weapon5, NowPool.weapon5)
-
-      this.pool = {
-        up4: NowPool.weapon4,
-        role4: this.def.role4,
-        weapon4,
-        up5: NowPool.weapon5,
-        five: weapon5
-      }
-    }
-
-    if (this.type === 'role') {
-      let role4 = lodash.difference(this.def.role4, NowPool.up4)
-      let role5 = lodash.difference(this.def.role5, NowPool.up5)
-
-      let up5 = NowPool.up5
-      if (this.role2) up5 = NowPool['up5_2']
-
-      this.pool = {
-        up4: NowPool.up4,
-        role4,
-        weapon4: this.def.weapon4,
-        up5,
-        five: role5
-      }
-    }
-
-    if (this.type === 'permanent') {
-      this.pool = {
-        up4: [],
-        role4: this.def.role4,
-        weapon4: this.def.weapon4,
-        up5: [],
-        five: this.def.role5,
-        fiveW: this.def.weapon5
-      }
-    }
-
-    this.pool.weapon3 = this.def.weapon3
+    this.pool = pool.getUpPool(this.e.user_id, this.def, this.type, this.role2 === true)
   }
 
   /** 用户数据 */

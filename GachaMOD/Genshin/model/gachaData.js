@@ -14,9 +14,7 @@ export default class GachaData extends base {
   constructor (e) {
     super(e)
     this.model = 'gacha'
-
     this.pool = {}
-
     this.set = gsCfg.getGachaSet(this.e.group_id)
     this.def = setting.getConfig('gacha')
     this.ele = gsCfg.element
@@ -24,7 +22,6 @@ export default class GachaData extends base {
     this.res = []
     this.fiveHave = []
     this.fourHave = []
-    this.bailian = true
   }
 
   static async init (e) {
@@ -40,8 +37,7 @@ export default class GachaData extends base {
   }
 
   /** 抽卡 */
-  async run (type = true) {
-    if (!type) this.bailian = false
+  async run () {
     this.res = []
     let list = this.lottery()
 
@@ -73,50 +69,8 @@ export default class GachaData extends base {
 
 
   async getPool () {
-    let NowPool = pool.getPool(this.e.user_id)
-    this.NowPool = NowPool
-
-    if (this.type === 'weapon') {
-      let weapon4 = lodash.difference(this.def.weapon4, NowPool.weapon4)
-      let weapon5 = lodash.difference(this.def.weapon5, NowPool.weapon5)
-
-      this.pool = {
-        up4: NowPool.weapon4,
-        role4: this.def.role4,
-        weapon4,
-        up5: NowPool.weapon5,
-        five: weapon5
-      }
-    }
-
-    if (this.type === 'role') {
-      let role4 = lodash.difference(this.def.role4, NowPool.up4)
-      let role5 = lodash.difference(this.def.role5, NowPool.up5)
-
-      let up5 = NowPool.up5
-      if (this.role2) up5 = NowPool['up5_2']
-
-      this.pool = {
-        up4: NowPool.up4,
-        role4,
-        weapon4: this.def.weapon4,
-        up5,
-        five: role5
-      }
-    }
-
-    if (this.type === 'permanent') {
-      this.pool = {
-        up4: [],
-        role4: this.def.role4,
-        weapon4: this.def.weapon4,
-        up5: [],
-        five: this.def.role5,
-        fiveW: this.def.weapon5
-      }
-    }
-
-    this.pool.weapon3 = this.def.weapon3
+    this.NowPool = pool.getPool(this.e.user_id)
+    this.pool = pool.getUpPool(this.e.user_id, this.def, this.type, this.role2 === true)
   }
 
   /** 用户数据 */
@@ -164,10 +118,8 @@ export default class GachaData extends base {
     /** 十连抽 */
     if (this.type === 'weapon') {
       this.user.today.weaponNum++
-      if (this.bailian) this.user.today.weaponNum += 9
     } else {
       this.user.today.num++
-      if (this.bailian) this.user.today.num += 9
     }
     for (let i = 1; i <= 10; i++) {
       this.index = i

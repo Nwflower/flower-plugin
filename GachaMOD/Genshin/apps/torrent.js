@@ -135,6 +135,7 @@ export class torrent extends plugin {
     await Gacha.saveUser()
 
     this.reply(msg, false, { at: this.e.user_id })
+    return true
   }
 
   // 获取抽卡次数
@@ -142,9 +143,7 @@ export class torrent extends plugin {
     let each = this.e.msg.replace(/(0|1|池|武器|十|抽|单|连|卡|奖|2|3)/g, '').trim()
     let replaceArr = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '百']
     for (let i = 0; i <= 9; i++) {
-      if (each.indexOf(replaceArr[i]) !== -1) {
-        return (i + 1)
-      }
+      if (each.indexOf(replaceArr[i]) !== -1) { return (i + 1)}
     }
     return 1
   }

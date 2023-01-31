@@ -1,4 +1,7 @@
+![logo_flower_plugin](https://s2.loli.net/2023/01/31/b4diZIPMVRCpAva.png)
+
 # 抽卡插件flower-plugin For Yunzai-Bot V3
+
 Yunzai-Bot V3插件包，主要提供拓展抽卡功能，意在不修改本体抽卡卡池信息的情况下提供自定义卡池的拓展
 
 ## 获取说明
