@@ -74,6 +74,7 @@ export default class GachaData extends base {
 
   async getPool () {
     let NowPool = pool.getPool(this.e.user_id)
+    this.NowPool = NowPool
 
     if (this.type === 'weapon') {
       let weapon4 = lodash.difference(this.def.weapon4, NowPool.weapon4)
