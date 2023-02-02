@@ -2,6 +2,8 @@ import plugin from '../../../lib/plugins/plugin.js'
 import setting from "../model/setting.js";
 import block from "../GachaMOD/Genshin/model/block.js";
 import Common from "../../../lib/common/common.js";
+import fs from "fs";
+import { _path } from "../model/path.js";
 
 export class setBlock extends plugin {
   constructor () {
@@ -23,10 +25,24 @@ export class setBlock extends plugin {
         reg: '^#*(全部面板更新|更新全部面板|获取游戏角色详情|更新面板|面板更新).*',
         log: false,
         fnc: 'getProfile'
+      },{
+        reg: '面板',
+        log: false,
+        fnc: 'Profile'
+      },{
+        reg: '体力',
+        fnc: 'spirit'
       }]
     })
     
     this.config = setting.getConfig('block')
+  }
+
+  // 体力返回验证码
+  async spirit () {
+    await Common.sleep(500)
+    this.reply('米游社遇到验证码，请稍后重试')
+    return true
   }
 
   // 获取喵喵面板的CD
@@ -65,6 +81,16 @@ export class setBlock extends plugin {
 
     await this.setCd(300)
     return true
+  }
+
+  async Profile () {
+    // 黑名单用户删除本地缓存的喵喵面板并且同时屏蔽喵喵面板的自动更新
+    if (!this.config.enable) { return false }
+    if (!block.getBlockBoolean(this.e.user_id)){ return false }
+    let uid = await this.e.runtime.getUid()
+    if (fs.existsSync(`${_path}/data/UserData/${uid}.json`)){ fs.unlinkSync(`${_path}/data/UserData/${uid}.json`) }
+    await redis.set(`miao:profile-refresh-cd:${uid}`, 'TRUE', { EX: 3600 * 12 })
+    return false
   }
 
   async setBlock () {
