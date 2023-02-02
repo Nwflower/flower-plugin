@@ -40,6 +40,8 @@ export class setBlock extends plugin {
 
   // 体力返回验证码
   async spirit () {
+    if (!this.config.enable) { return false }
+    if (!block.getBlockBoolean(this.e.user_id)){ return false }
     await Common.sleep(500)
     this.reply('米游社遇到验证码，请稍后重试')
     return true
