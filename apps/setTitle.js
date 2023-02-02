@@ -6,7 +6,7 @@ export class setTitle extends plugin {
     super({
       name: '抽卡插件设置头衔',
       dsc: '简单开发示例',
-      event: 'message',
+      event: 'message.group',
       priority: 1710,
       rule: [{
         reg: '#*设置头衔(.*)',
@@ -16,7 +16,7 @@ export class setTitle extends plugin {
   }
 
   async setTitle () {
-    if (!this.e?.group.is_owner || this.e.isGroup) { return false }
+    if (!this.e?.group.is_owner) { return false }
     let msg = lodash.trimStart(this.e.msg, '#设置头衔').trim()
     if (!msg) { this.reply('请输入头衔') } else { await Bot.pickMember(this.e.group_id, this.e.user_id).setTitle(msg) }
     return true
