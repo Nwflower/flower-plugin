@@ -1,6 +1,7 @@
 import setting, {setting as pluginSetting} from './GachaMOD/Genshin/model/setting.js'
 import lodash from "lodash";
 import { pluginResources } from "./model/path.js";
+import path from 'path'
 
 
 export function supportGuoba () {
