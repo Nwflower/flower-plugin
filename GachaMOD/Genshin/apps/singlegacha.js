@@ -5,8 +5,8 @@ import moment from 'moment'
 import pool from '../model/pool.js'
 import lodash from 'lodash'
 import GachaData from '../model/gachaData.js'
-import setting from "../model/setting.js";
 import Coin from "../model/coin.js";
+import block from "../model/block.js";
 
 export class singlegacha extends plugin {
   constructor () {
@@ -33,7 +33,7 @@ export class singlegacha extends plugin {
   async gacha () {
     this.GachaData = await GachaData.init(this.e)
 
-    this.def = setting.getdefSet('gacha')
+    this.def = block.getGachaDef(this.e.user_id)
     if (this.e.group_id) {
       this.set = gsCfg.getGachaSet(this.e.group_id)
     } else {
