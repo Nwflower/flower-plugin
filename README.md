@@ -1,4 +1,4 @@
-![logo_flower_plugin](https://s2.loli.net/2023/01/31/b4diZIPMVRCpAva.png)
+<img decoding="async" align=right src="resources/img/logo_flower_plugin.png" width="25%">
 
 # 抽卡插件flower-plugin For Yunzai-Bot V3
 

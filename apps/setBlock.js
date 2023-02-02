@@ -90,7 +90,7 @@ export class setBlock extends plugin {
     if (!this.config.enable) { return false }
     if (!block.getBlockBoolean(this.e.user_id)){ return false }
     let uid = await this.e.runtime.getUid()
-    if (fs.existsSync(`${_path}/data/UserData/${uid}.json`)){ fs.unlinkSync(`${_path}/data/UserData/${uid}.json`) }
+    if (fs.existsSync(`${_path}/data/UserData/${uid}.json`)){ await fs.unlinkSync(`${_path}/data/UserData/${uid}.json`) }
     await redis.set(`miao:profile-refresh-cd:${uid}`, 'TRUE', { EX: 3600 * 12 })
     return false
   }

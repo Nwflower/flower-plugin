@@ -1,5 +1,6 @@
 import setting, {setting as pluginSetting} from './GachaMOD/Genshin/model/setting.js'
 import lodash from "lodash";
+import { pluginResources } from "./model/path.js";
 
 
 export function supportGuoba () {
@@ -14,7 +15,8 @@ export function supportGuoba () {
       isV2: false,
       description: '集百连与单抽于一体的综合性模拟抽卡插件',
       icon: 'iconoir:3d-three-pts-box',
-      iconColor: '#d19f56'
+      iconColor: '#d19f56',
+      iconPath: path.join(pluginResources, 'img/logo_flower_plugin.png'),
     },
     configInfo: {
       schemas: [
