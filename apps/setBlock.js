@@ -43,7 +43,7 @@ export class setBlock extends plugin {
     if (!this.config.enable) { return false }
     if (!block.getBlockBoolean(this.e.user_id)){ return false }
     await Common.sleep(500)
-    this.reply('米游社遇到验证码，请稍后重试')
+    this.reply('米游社查询遇到验证码，请稍后再试')
     return true
   }
 
