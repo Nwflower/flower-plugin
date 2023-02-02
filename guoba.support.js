@@ -31,6 +31,12 @@ export function supportGuoba () {
           component: 'Switch'
         },
         {
+          field: 'block.enable',
+          label: '隐形拉黑开关',
+          bottomHelpMessage: '开启隐形拉黑',
+          component: 'Switch'
+        },
+        {
           field: 'wordListener.time',
           label: '违禁词禁言时长',
           bottomHelpMessage: '禁言时长，秒',
@@ -177,6 +183,12 @@ export function supportGuoba () {
             let config = pluginSetting.getConfig('wordListener')
             config.time = value
             pluginSetting.setConfig('wordListener',config)
+            continue
+          }
+          if (keyPath === 'block.enable') {
+            let config = pluginSetting.getConfig('block')
+            config.enable = value
+            pluginSetting.setConfig('block',config)
             continue
           }
           switch (keyPath) {

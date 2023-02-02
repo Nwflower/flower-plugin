@@ -3,8 +3,8 @@ import gsCfg from "../../../../genshin/model/gsCfg.js";
 import lodash from "lodash";
 import moment from "moment";
 import pool from "./pool.js";
-import setting from "./setting.js";
 import { modName } from "./MODpath.js";
+import block from "./block.js";
 
 export default class GachaData extends base {
   /**
@@ -16,7 +16,7 @@ export default class GachaData extends base {
     this.model = 'gacha'
     this.pool = {}
     this.set = gsCfg.getGachaSet(this.e.group_id)
-    this.def = setting.getConfig('gacha')
+    this.def = block.getGachaDef(this.e.user_id)
     this.ele = gsCfg.element
     this.type = 'role'
     this.res = []
