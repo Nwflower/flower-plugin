@@ -78,7 +78,9 @@ export class setBlock extends plugin {
     }
 
     this.reply(`开始获取uid:${uid}的数据，可能会需要一定时间~`)
-    await Common.sleep(2500)
+
+    // 随机延迟一下再回复 伪装成好像真的去获取了一样
+    await Common.sleep(Math.floor(Math.random()*5000) + 1200)
     this.reply(`请求失败，可能是面板服务升级维护或遇到故障，请稍后重试...`)
 
     await this.setCd(300)
@@ -86,7 +88,7 @@ export class setBlock extends plugin {
   }
 
   async Profile () {
-    // 黑名单用户删除本地缓存的喵喵面板并且同时屏蔽喵喵面板的自动更新
+    // 黑名单用户 删除本地已缓存的喵喵面板并且同时屏蔽喵喵面板的自动获取面板更新令其无法查询面板
     if (!this.config.enable) { return false }
     if (!block.getBlockBoolean(this.e.user_id)){ return false }
     let uid = await this.e.runtime.getUid()
