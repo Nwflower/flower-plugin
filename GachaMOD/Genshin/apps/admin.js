@@ -136,7 +136,10 @@ export class admin extends plugin {
         case 'pool.c4':
           let up4 = []
           arr = val.replaceAll('，', ',').split(',')
-          await arr.forEach((value) => { up4.push(gsCfg.getRole(value)) })
+          await arr.forEach((value) => {
+            let role = gsCfg.getRole(value)
+            up4.push(role.name)
+          })
           configPool.up4 = up4
           setting.setConfig('pool',configPool)
           cfgKey = false// 取消独立验证
