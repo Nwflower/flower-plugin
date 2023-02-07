@@ -11,6 +11,7 @@ import Common from "../../../../../lib/common/common.js";
 
 let cfgMap = {
   自定义: 'gacha.enable',
+  百连: 'gacha.more',
   小保底概率: 'gacha.wai',
   五星角色概率: 'gacha.chance5',
   四星角色概率: 'gacha.chance4',
@@ -201,7 +202,8 @@ export class admin extends plugin {
       gachaweapon5: probability.chanceW5,
       gachaweapon4: probability.chanceW4,
       relifetime: probability.relifeCD,
-      word: getStatus('wordListener.enable', false, true)
+      word: getStatus('wordListener.enable', false, true),
+      more: getStatus('gacha.more', true, false)
     }
 
     let gachaconfigchance = (probability.wai === 50 && probability.chance5 === 60 && probability.chance4 === 510 && probability.chanceW5 === 70 && probability.chanceW4 === 600) ? '无需复位' : '可复位'

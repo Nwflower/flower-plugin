@@ -40,6 +40,12 @@ export function supportGuoba () {
           component: 'Switch'
         },
         {
+          field: 'gacha.more',
+          label: '百连开关',
+          bottomHelpMessage: '关闭后，无法使用二十连、三十连以及百连',
+          component: 'Switch'
+        },
+        {
           field: 'wordListener.time',
           label: '违禁词禁言时长',
           bottomHelpMessage: '禁言时长，秒',

@@ -38,19 +38,24 @@ export class torrent extends plugin {
     let gachacishu = await this.cishu()
     if (!await this.checkLimit(gachacishu * 10)) return true
 
+    /** 撤回消息 */
+    let recallMsg = this.GachaData.set.delMsg
+
     if (Number(gachacishu) === 1 || isNaN(gachacishu)) {
       let data = await this.GachaData.run()
       /** 生成图片 */
       let img = await puppeteer.screenshot('gacha', data)
       if (!img) return false
-      /** 撤回消息 */
-      let recallMsg = this.GachaData.set.delMsg
       /** 出货了不撤回 */
       if (data.nowFive >= 1 || data.nowFour >= 4) {
         recallMsg = 0
       }
       await this.reply(img, false, { recallMsg })
     } else {
+      if (!this.appconfig.more) {
+        await this.reply('未开启多次抽卡功能...',false,{recallMsg})
+        return true
+      }
       let datas = []; let all5 = 0; let all4 = 0; let imgs = []; let w; let imgss = []
       for (let i = 1; i <= gachacishu; i++) {
         datas[i] = await this.GachaData.run()
