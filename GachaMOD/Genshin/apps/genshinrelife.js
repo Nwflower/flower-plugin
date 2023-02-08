@@ -60,11 +60,6 @@ export class genshinrelife extends plugin {
     let data = JSON.parse(fs.readFileSync(`${_path}/plugins/miao-plugin/resources/meta/character/${character}/data.json`,'utf-8'))
     let title = data.title
 
-    // 角色列表
-    let otherList =await GsCfg.getdefSet('role','other')
-    let id = await GsCfg.roleNameToID(character)
-
-    let star = (otherList.five.includes(parseInt(id)))? 5:4
     let colorData = YAML.parse(fs.readFileSync(`${modResources}/yaml/color.yaml`,'utf-8'))
     let color = colorData[element]
 
@@ -78,8 +73,8 @@ export class genshinrelife extends plugin {
       element,
       color,
       character,
-      star,
       card: `${_path}/plugins/miao-plugin/resources/meta/character/${character}/imgs/card.webp`,
+      splash: `${_path}/plugins/miao-plugin/resources/meta/character/${character}/imgs/splash.webp`,
     })
     await this.reply(base64)
     return true
