@@ -9,7 +9,7 @@ export function supportGuoba () {
     pluginInfo: {
       name: 'flower-plugin',
       title: '抽卡插件',
-      author: '@西北一枝花',
+      author: '@听语惊花',
       authorLink: 'https://github.com/Nwflower',
       link: 'https://github.com/Nwflower/flower-plugin',
       isV3: true,
