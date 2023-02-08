@@ -165,7 +165,7 @@ export class admin extends plugin {
           break
         case 'gacha.sync':
           val = !/关闭/.test(val)
-          if (val) { setting.setConfig('pool',setting.getConfig('pool'))}
+          if (val) { setting.setConfig('pool',setting.getdefSet('pool'))}
           break
         case 'gacha.relifeCD':
           val = Math.min(1440, Math.max(1, val * 1))
