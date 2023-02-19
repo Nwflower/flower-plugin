@@ -4,6 +4,7 @@ import YAML from 'yaml'
 import fs from 'node:fs'
 import Coin from "../model/coin.js";
 import GsCfg from "../../../../genshin/model/gsCfg.js";
+import Common from "../../../../../lib/common/common.js";
 
 let cfgMap = {
   蓝球: 'blue',
@@ -72,7 +73,8 @@ export class times extends plugin {
           break
       }
     }
-    let coinConfig = { ...await coin.getCoinConfig(ob),...await coin.getCoinConfig(ob)}
+    let coinConfig = { ...await coin.getCoinConfig('default'),...await coin.getCoinConfig(ob)}
+    await Common.sleep(100)
     let msgs = [
       `当前本群每日粉球：${coinConfig.pink}，修改命令#设置抽卡粉球100`,
       `当前本群每日蓝球：${coinConfig.blue}，修改命令#设置抽卡蓝球10`,
