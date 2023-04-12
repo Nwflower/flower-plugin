@@ -28,7 +28,6 @@ if (Math.floor(Math.random()*100)<5){
 const syncFiles = fs.readdirSync(`./plugins/${pluginName}/GachaMOD`)
 let apps = {}
 
-
 const appfiles = fs
   .readdirSync(`./plugins/${pluginName}/apps`)
   .filter((file) => file.endsWith('.js'))
