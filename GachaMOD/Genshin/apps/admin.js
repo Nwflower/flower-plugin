@@ -260,8 +260,8 @@ export class admin extends plugin {
             Bot.logger.error(`重启失败\n${error.stack}`)
             return true
           } else if (stdout) {
-            Bot.logger.mark('重启成功，运行已转为后台，查看日志请用命令：npm run log')
-            Bot.logger.mark('停止后台运行命令：npm stop')
+            Bot.logger.mark('重启成功，运行已转为后台，查看日志请用命令：pnpm run log')
+            Bot.logger.mark('停止后台运行命令：pnpm stop')
             process.exit()
           }
         })
