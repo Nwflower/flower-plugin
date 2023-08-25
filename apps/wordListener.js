@@ -5,7 +5,7 @@ import lodash from 'lodash'
 import setting from "../model/setting.js";
 
 export class wordListener extends plugin {
-  constructor () {
+  constructor() {
     let rule = {
       reg: '.*',
       fnc: 'wordsListener'
@@ -20,12 +20,12 @@ export class wordListener extends plugin {
         reg: '^#*(解除|删除|取消|不)屏蔽(本群|全局)?(.)+',
         fnc: 'delBlackWord'
       }, {
-        reg: '^#*屏蔽(本群|全局)?[^(词列表)](.)*',
-        fnc: 'addBlackWord'
-      }, {
-        reg: '^#*屏蔽词列表',
-        fnc: 'blackList'
-      }]
+          reg: '^#*屏蔽(本群|全局)?[^(词列表)](.)*',
+          fnc: 'addBlackWord'
+        }, {
+          reg: '^#*屏蔽词列表',
+          fnc: 'blackList'
+        }]
     })
     this._path = process.cwd().replace(/\\/g, '/')
     this.wordResPath = `${this._path}/plugins/flower-plugin/resources/blackword`
@@ -37,11 +37,11 @@ export class wordListener extends plugin {
     })
   }
 
-  async init (path = `${this.wordResPath}/`) {
+  async init(path = `${this.wordResPath}/`) {
     if (!fs.existsSync(path)) { fs.mkdirSync(path) }
   }
 
-  async blackList () {
+  async blackList() {
     if (!this.nock) { return false }
     let words = []
     let files = []
@@ -74,7 +74,7 @@ export class wordListener extends plugin {
     words = []
     if (fs.existsSync(globalPath)) {
       files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
-      for (let file of files) { words =lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
+      for (let file of files) { words = lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
     }
     forWordMsg.push(`全局屏蔽词如下，共 ${words.length} 个`)
     for (let i = 0; i < words.length; i += 100) {
@@ -94,10 +94,10 @@ export class wordListener extends plugin {
     await this.reply(sed, false, 100)
   }
 
-  async wordsListener () {
+  async wordsListener() {
     if (!this.nock) { return false }
     if (this.e.isMaster) { return false }
-    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
+    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
     let receivedMsg = ''
     for (let val of this.e.message) {
       switch (val.type) {
@@ -131,14 +131,14 @@ export class wordListener extends plugin {
   }
 
   // 检查权限
-  async CheckAuth () {
+  async CheckAuth() {
     if (!this.nock) { return false }
     let qq = this.e.group.pickMember(this.e.sender.user_id)
     return (qq.is_owner || qq.is_admin || this.e.isMaster)
   }
 
   // 获得违禁词
-  async getBlackWords () {
+  async getBlackWords() {
     let words = []
     let globalPath = `${this.wordResPath}/global`
     let groupPath = `${this.wordResPath}/${this.e.group_id}`
@@ -154,8 +154,8 @@ export class wordListener extends plugin {
     return words
   }
 
-  async delBlackWord () {
-    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
+  async delBlackWord() {
+    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
     if (!await this.CheckAuth()) { return true }
     let handleSentence = this.e.msg.replaceAll(/#*(解除|删除|取消|不)屏蔽(本群|全局)?/g, '').trim()
     if (!handleSentence) { return false }
@@ -195,8 +195,8 @@ export class wordListener extends plugin {
     return true
   }
 
-  async addBlackWord () {
-    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
+  async addBlackWord() {
+    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
     if (!await this.CheckAuth()) { return true }
     let handleSentence = this.e.msg.replaceAll(/#*屏蔽(本群|全局)?/g, '').trim()
     if (!handleSentence) { return false }
@@ -221,7 +221,7 @@ export class wordListener extends plugin {
     return true
   }
 
-  async getData () {
+  async getData() {
     let today = new Date()
     let month = today.getMonth() + 1
     month = (month > 9) ? month : ('0' + month)
