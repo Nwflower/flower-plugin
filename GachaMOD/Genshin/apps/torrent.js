@@ -1,12 +1,12 @@
-
 import plugin from '../../../../../lib/plugins/plugin.js'
 import GachaData from '../model/gachaData.js'
 import lodash from 'lodash'
 import puppeteer from '../../../../../lib/puppeteer/puppeteer.js'
-import setting from "../model/setting.js";
-import Coin from "../model/coin.js";
+import setting from "../model/setting.js"
+import Coin from "../model/coin.js"
+import common from '../../../../../lib/common/common.js'
 export class torrent extends plugin {
-  constructor () {
+  constructor() {
     super({
       name: '抽卡插件十连',
       dsc: '模拟抽卡，每天十连一次，四点更新',
@@ -29,7 +29,7 @@ export class torrent extends plugin {
   get appconfig() { return setting.getConfig("gacha") }
 
   // 十连
-  async gacha () {
+  async gacha() {
     // 初始化配置文件
     if (!this.appconfig.enable) { return false; }
     this.GachaData = await GachaData.init(this.e)
@@ -65,11 +65,7 @@ export class torrent extends plugin {
         all4 += datas[i].nowFour
         let img = await puppeteer.screenshot('gacha', datas[i])
         imgss.push(img)
-        imgs.push({
-          message: img,
-          nickname: Bot.nickname,
-          user_id: Bot.uin
-        })
+        imgs.push(img)
       }
       let recallMsg = this.GachaData.set.delMsg
       /** 出货了不撤回 */
@@ -77,7 +73,7 @@ export class torrent extends plugin {
         recallMsg = 0
       }
       if (this.e.isGroup) {
-        w = await this.e.group.makeForwardMsg(imgs)
+        w = await common.makeForwardMsg(this.e, imgs, '点我查看抽卡结果')
         await this.reply(w, false, { recallMsg })
       } else {
         await this.reply(imgss, false, { recallMsg })
@@ -93,27 +89,27 @@ export class torrent extends plugin {
     let limit = await this.Coin.useCoin(this.GachaData.type, num)
 
     let msg = lodash.truncate(this.e.sender.card, { length: 8 }) + '\n'
-    if (!limit && user.today.star.length>0) {
+    if (!limit && user.today.star.length > 0) {
       msg += '今日模拟抽卡五星：'
       if (user.today.star.length >= 8) {
         msg += `${user.today.star.length}个`
       } else {
-        user.today.star.forEach(v => { msg += `${v.name}(${v.num})\n`})
+        user.today.star.forEach(v => { msg += `${v.name}(${v.num})\n` })
         msg = lodash.trim(msg, '\n')
       }
       if (user.week.num >= 2) {
         msg += `\n本周：${user.week.num}个五星`
       }
-    } else if (!limit){
-      msg += `暂时无法抽卡。\n已累计${(this.GachaData.type === 'weapon')?user.today.weaponNum:user.today.num}抽无五星`
+    } else if (!limit) {
+      msg += `暂时无法抽卡。\n已累计${(this.GachaData.type === 'weapon') ? user.today.weaponNum : user.today.num}抽无五星`
     }
-    if (!limit){
+    if (!limit) {
       this.reply(msg, false, { recallMsg: this.GachaData.set.delMsg })
     }
     return limit
   }
 
-  async weaponBing () {
+  async weaponBing() {
     let Gacha = await GachaData.init(this.e)
 
     let { NowPool, user, msg = '' } = Gacha
@@ -144,11 +140,11 @@ export class torrent extends plugin {
   }
 
   // 获取抽卡次数
-  async cishu () {
+  async cishu() {
     let each = this.e.msg.replace(/(0|1|池|武器|十|抽|单|连|卡|奖|2|3)/g, '').trim()
     let replaceArr = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '百']
     for (let i = 0; i <= 9; i++) {
-      if (each.indexOf(replaceArr[i]) !== -1) { return (i + 1)}
+      if (each.indexOf(replaceArr[i]) !== -1) { return (i + 1) }
     }
     return 1
   }

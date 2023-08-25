@@ -2,9 +2,9 @@ import plugin from '../../../../../lib/plugins/plugin.js'
 import lodash from 'lodash'
 import YAML from 'yaml'
 import fs from 'node:fs'
-import Coin from "../model/coin.js";
-import GsCfg from "../../../../genshin/model/gsCfg.js";
-import Common from "../../../../../lib/common/common.js";
+import Coin from "../model/coin.js"
+import GsCfg from "../../../../genshin/model/gsCfg.js"
+import common from "../../../../../lib/common/common.js"
 
 let cfgMap = {
   蓝球: 'blue',
@@ -74,7 +74,7 @@ export class times extends plugin {
       }
     }
     let coinConfig = { ...await coin.getCoinConfig('default'),...await coin.getCoinConfig(ob)}
-    await Common.sleep(100)
+    await common.sleep(100)
     let msgs = [
       `当前本群每日粉球：${coinConfig.pink}，修改命令#设置抽卡粉球100`,
       `当前本群每日蓝球：${coinConfig.blue}，修改命令#设置抽卡蓝球10`,
@@ -82,13 +82,9 @@ export class times extends plugin {
     ]
     let msg = []
     for (let m of msgs) {
-      msg.push({
-        message: m,
-        nickname: Bot.nickname,
-        user_id: Bot.uin
-      })
+      msg.push(m)
     }
-    let sed = await Bot.pickFriend(Bot.uin).makeForwardMsg(msg)
+    let sed = await common.makeForwardMsg(this.e, msg, '点我查看抽卡设置')
     fs.writeFileSync(`${this.configPath}gacha.set.yaml`, YAML.stringify(groupset))
     await this.reply(sed, false, groupset[ob].delMsg)
     return true

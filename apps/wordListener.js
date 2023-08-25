@@ -95,22 +95,14 @@ export class wordListener extends plugin {
         message.push(`${j + 1}、【${words[j]}】`)
         if (j !== i + 99) message.push('\n')
       }
-      forWordMsg.push({
-        message,
-        nickname: Bot.nickname,
-        user_id: Bot.uin
-      })
+      forWordMsg.push(message)
       if (i > 500) {
         let ellipsisWords = words.length - i
-        forWordMsg.push({
-          message: `全局屏蔽词较多，剩下的${ellipsisWords}个词语已经省略`,
-          nickname: Bot.nickname,
-          user_id: Bot.uin
-        })
+        forWordMsg.push(`全局屏蔽词较多，剩下的${ellipsisWords}个词语已经省略`)
         break
       }
     }
-    let sed = await this.e.group.makeForwardMsg(forWordMsg)
+    let sed = await common.makeForwardMsg(this.e, forWordMsg, `点我查看屏蔽词列表`)
     await this.reply(sed, false, 100)
   }
 
