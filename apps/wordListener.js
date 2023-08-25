@@ -53,11 +53,7 @@ export class wordListener extends plugin {
       files = fs.readdirSync(groupPath).filter((file) => file.endsWith('.yaml'))
       for (let file of files) { words = lodash.unionWith(YAML.parse(fs.readFileSync(`${groupPath}/${file}`, 'utf8')), words) }
     }
-    forWordMsg.push({
-      message: `本群屏蔽词如下，共 ${words.length} 个`,
-      nickname: Bot.nickname,
-      user_id: Bot.uin
-    })
+    forWordMsg.push(`本群屏蔽词如下，共 ${words.length} 个`)
     for (let i = 0; i < words.length; i += 100) {
       let message = []
       for (let j = i; j < i + 100 && j < words.length; j++) {
@@ -70,11 +66,7 @@ export class wordListener extends plugin {
         user_id: Bot.uin
       })
       if (i > 500) {
-        forWordMsg.push({
-          message: `本群屏蔽词较多，剩下的${words.length - i}个词语已经省略`,
-          nickname: Bot.nickname,
-          user_id: Bot.uin
-        })
+        forWordMsg.push(`本群屏蔽词较多，剩下的${words.length - i}个词语已经省略`)
         break
       }
     }
@@ -84,11 +76,7 @@ export class wordListener extends plugin {
       files = fs.readdirSync(globalPath).filter((file) => file.endsWith('.yaml'))
       for (let file of files) { words =lodash.unionWith(YAML.parse(fs.readFileSync(`${globalPath}/${file}`, 'utf8')), words) }
     }
-    forWordMsg.push({
-      message: `全局屏蔽词如下，共 ${words.length} 个`,
-      nickname: Bot.nickname,
-      user_id: Bot.uin
-    })
+    forWordMsg.push(`全局屏蔽词如下，共 ${words.length} 个`)
     for (let i = 0; i < words.length; i += 100) {
       let message = []
       for (let j = i; j < i + 100 && j < words.length; j++) {
@@ -102,7 +90,7 @@ export class wordListener extends plugin {
         break
       }
     }
-    let sed = await common.makeForwardMsg(this.e, forWordMsg, `点我查看屏蔽词列表`)
+    let sed = await common.makeForwardMsg(this.e, forWordMsg, `点我查看全局屏蔽词，共 ${words.length} 个`)
     await this.reply(sed, false, 100)
   }
 
