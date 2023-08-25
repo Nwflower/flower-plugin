@@ -60,11 +60,7 @@ export class wordListener extends plugin {
         message.push(`${j + 1}、【${words[j]}】`)
         if (j !== i + 99) message.push('\n')
       }
-      forWordMsg.push({
-        message,
-        nickname: Bot.nickname,
-        user_id: Bot.uin
-      })
+      forWordMsg.push(message)
       if (i > 500) {
         forWordMsg.push(`本群屏蔽词较多，剩下的${words.length - i}个词语已经省略`)
         break
@@ -97,7 +93,7 @@ export class wordListener extends plugin {
   async wordsListener() {
     if (!this.nock) { return false }
     if (this.e.isMaster) { return false }
-    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
+    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     let receivedMsg = ''
     for (let val of this.e.message) {
       switch (val.type) {
@@ -155,7 +151,7 @@ export class wordListener extends plugin {
   }
 
   async delBlackWord() {
-    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
+    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     if (!await this.CheckAuth()) { return true }
     let handleSentence = this.e.msg.replaceAll(/#*(解除|删除|取消|不)屏蔽(本群|全局)?/g, '').trim()
     if (!handleSentence) { return false }
@@ -196,7 +192,7 @@ export class wordListener extends plugin {
   }
 
   async addBlackWord() {
-    if (!this.e.group.is_admin && !this.e.group.is_owner && !this.e.isMaster) { return false }
+    if (!this.e.group.is_admin && !this.e.group.is_owner) { return false }
     if (!await this.CheckAuth()) { return true }
     let handleSentence = this.e.msg.replaceAll(/#*屏蔽(本群|全局)?/g, '').trim()
     if (!handleSentence) { return false }
