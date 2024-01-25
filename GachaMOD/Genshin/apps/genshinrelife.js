@@ -53,7 +53,7 @@ export class genshinrelife extends plugin {
     let identity = identities[character]
 
     // 获取神之眼
-    let element = GsCfg.getElementByRoleName(character)
+    let element = GsCfg.getdefSet('element', 'role')[character]
 
     // 获取称号
     let data = JSON.parse(fs.readFileSync(`${_path}/plugins/miao-plugin/resources/meta-gs/character/${character}/data.json`, 'utf-8'))
