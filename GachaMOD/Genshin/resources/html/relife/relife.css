@@ -109,9 +109,11 @@ body {
 
 .character {
     position: relative;
-    display: table-cell;
-    text-align:center;
-    margin: -50px 650px auto;
+    display: flex;
+    justify-content: center;
+    transform: translateX(25%);
+}
+
+.character img {
     height: 880px;
-    max-height: 880px;
 }
