@@ -57,20 +57,10 @@ git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flowe
 
 | 名单     | 联系方式     | 主要贡献     |
 | -------- | ------------ | ------------ |
-| SunRyK曉K | QQ1509293009 | 更新维护支持 |
+| 其实雨很好 | QQ257800180 | 更新维护支持|
+| SunRyK曉K | QQ1509293009 | `转生`功能的灵感来源，早期的维护支持 |
 | ZDPLM    | QQ2895699730 | 提供资源图片 |
 | Pluto    | QQ717157592  | 谁是卧底.js  |
-
-### 12月发电榜
-
-| NickName                         |
-| :------------------------------- |
-| 惜月                             |
-| 溯流光                           |
-| 小叶                             |
-| 好名字可以让你的朋友更容易记住你 |
-| 长楠                             |
-| 寮青                             |
 
 ## 其他
 
@@ -79,7 +69,7 @@ git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flowe
 | 插件名                | 插件地址                                                  |
 | --------------------- | --------------------------------------------------------- |
 | 抽卡插件Flower-plugin | [flower-plugin](https://gitee.com/Nwflower/flower-plugin) |
-| Atlas原神图鉴         | [Atlas](https://gitee.com/Nwflower/atlas)                 |
+| Atlas图鉴             | [Atlas](https://gitee.com/Nwflower/atlas)                 |
 | 自动化插件auto-plugin | [auto-plugin](https://gitee.com/Nwflower/auto-plugin)     |
 
 ### 友情链接
