@@ -4,7 +4,6 @@ import fs from 'node:fs'
 import { modResources } from '../model/MODpath.js'
 import puppeteer from '../../../../../lib/puppeteer/puppeteer.js'
 import YAML from 'yaml'
-import GsCfg from '../../../../genshin/model/gsCfg.js'
 import { _path } from '../../../model/path.js'
 
 let CD = {}
@@ -28,6 +27,12 @@ export class genshinrelife extends plugin {
   get appconfig () { return setting.getConfig('gacha') }
 
   async relife (e) {
+    let Character
+    try {
+      Character = (await import('#miao.models')).Character
+    } catch (err) {
+      return logger.error('【抽卡插件】转生功能需要安装 喵喵插件 才能正常使用。')
+    }
     // 校验CD和权限
     let cdtime = this.appconfig.relifeCD
     if (CD[e.user_id] && !e.isMaster) {
@@ -44,38 +49,27 @@ export class genshinrelife extends plugin {
     let characterList = Object.keys(identities)
     let character = characterList[Math.floor(Math.random() * characterList.length)]
 
-    if (!fs.existsSync(`${_path}/plugins/miao-plugin/resources/meta-gs/character/${character}/data.json`)) {
-      logger.error('【抽卡插件】转生功能需要安装 喵喵插件 才能正常使用。')
-      return false
-    }
+    // 获取角色详情
+    let char = Character.get(character, 'gs')
+    if (!char) return false
 
     // 获取身份
     let identity = identities[character]
 
-    // 获取神之眼
-    let element = GsCfg.getdefSet('element', 'role')[character]
-
-    // 获取称号
-    let data = JSON.parse(fs.readFileSync(`${_path}/plugins/miao-plugin/resources/meta-gs/character/${character}/data.json`, 'utf-8'))
-    let title = data.title
-
     let colorData = YAML.parse(fs.readFileSync(`${modResources}/yaml/color.yaml`, 'utf-8'))
-    let color = colorData[element]
+    let color = colorData[char.elem]
 
     let base64 = await puppeteer.screenshot('flower-plugin', {
       tplFile: './plugins/flower-plugin/GachaMOD/Genshin/resources/html/relife/relife.html',
-      pluResPath: `${_path}/plugins/flower-plugin/GachaMOD/Genshin/resources/`,
+      pluResPath: `${modResources}/`,
+      miaoResPath: `${_path}/plugins/miao-plugin/resources/`,
       saveId: 'genshinrelife',
       imgType: 'png',
+      ...char.getData('name,title,elemName'),
       identity,
-      title,
-      element,
       color,
-      character,
-      card: `${_path}/plugins/miao-plugin/resources/meta-gs/character/${character}/imgs/card.webp`,
-      splash: `${_path}/plugins/miao-plugin/resources/meta-gs/character/${character}/imgs/splash.webp`
+      imgs: char.getImgs()
     })
-    await this.reply(base64)
-    return true
+    return e.reply(base64)
   }
 }
