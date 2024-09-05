@@ -52,13 +52,13 @@ export class genshinrelife extends plugin {
     // 获取角色详情
     let char = Character.get(character, 'gs')
     if (!char) return false
-    char = char.getData('name,title,elemName')
+    let data = char.getData('name,title,elemName')
 
     // 获取身份
     let identity = identities[character]
 
     let colorData = YAML.parse(fs.readFileSync(`${modResources}/yaml/color.yaml`, 'utf-8'))
-    let color = colorData[char.elemName]
+    let color = colorData[data.elemName]
 
     let base64 = await puppeteer.screenshot('flower-plugin', {
       tplFile: './plugins/flower-plugin/GachaMOD/Genshin/resources/html/relife/relife.html',
@@ -66,7 +66,7 @@ export class genshinrelife extends plugin {
       miaoResPath: `${_path}/plugins/miao-plugin/resources/`,
       saveId: 'genshinrelife',
       imgType: 'png',
-      ...char,
+      ...data,
       identity,
       color,
       imgs: char.getImgs()
