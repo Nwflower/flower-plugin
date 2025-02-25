@@ -169,7 +169,7 @@ export default class GachaData extends base {
     if (this.type == 'permanent') tmpUp = 0
 
     let tmpName = ''
-    if (this.type == 'weapon' && this.user[this.type].lifeNum >= 2) {
+    if (this.type == 'weapon' && this.user[this.type].lifeNum >= 1) {
       /** 定轨 */
       tmpName = this.getBingWeapon()
       this.user[this.type].lifeNum = 0
