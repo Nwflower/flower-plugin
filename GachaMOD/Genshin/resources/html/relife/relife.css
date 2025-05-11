@@ -67,8 +67,37 @@ body {
     left: 85px;
 }
 
+
+.info-user {
+    position: absolute;
+    top: 25px;
+    left: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.info-user .info-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+}
+
+.info-user .info-name {
+    font-size: 65px;
+    margin-left: 40px;
+    font-family: NZBZ, YS, sans-serif;
+    -webkit-text-stroke: 1px #FFFFFF;
+}
+
+.info-user .info-id {
+    font-size: 48px;
+    margin-left: 40px;
+    font-family: NZBZ, YS, sans-serif;
+    -webkit-text-stroke: 1px #FFFFFF;
+}
+
 .info-title{
-    top: 65px;
+    top: 220px;
     font-family: NZBZ, YS, sans-serif;
 }
 

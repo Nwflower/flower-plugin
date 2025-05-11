@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="shortcut icon" href="#" />
-    <link rel="stylesheet" type="text/css" href="{{pluResPath}}html/relife/relife.css" />
-    <title>转生</title>
-  </head>
-  <body>
-    <div class="container" id="container" style="background-image: url({{miaoResPath}}{{imgs.card}})">
-      <div class="character">
-        <img src="{{miaoResPath}}{{imgs.splash}}"/>
-      </div>
-      <div class="info-bg info-title" style="color: {{color}}">
-        <p class="common-text">恭喜你转生成了</p>
-        <p class="name">{{name}}</p>
-      </div>
-      <div style="color: {{color}}">
-        <div class="info-bg info-hang1">神之眼:{{elemName}}</div>
-        <div class="info-bg info-hang2">称号:{{title}}</div>
-        <div class="info-bg info-hang3">身份:{{identity}}</div>
-      </div>
-      <div class="logo">Created By Yunzai-Bot & Flower-plugin</div>
+
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <link rel="shortcut icon" href="#" />
+  <link rel="stylesheet" type="text/css" href="{{pluResPath}}html/relife/relife.css" />
+  <title>转生</title>
+</head>
+
+<body>
+  <div class="container" id="container" style="background-image: url({{miaoResPath}}{{imgs.card}})">
+    <div class="character">
+      <img src="{{miaoResPath}}{{imgs.splash}}" />
     </div>
-  </body>
-  
+    <div class="info-user" style="color: {{color}}">
+      <img class="info-img" src="{{userIcon}}" />
+      <div>
+        <p class="info-name common-text">{{nickname}}</p>
+        <div class="info-id">{{userId}}</div>
+      </div>
+    </div>
+    <div class="info-bg info-title" style="color: {{color}}">
+      <p class="common-text">恭喜你转生成了</p>
+      <p class="name">{{name}}</p>
+    </div>
+    <div style="color: {{color}}">
+      <div class="info-bg info-hang1">神之眼:{{elemName}}</div>
+      <div class="info-bg info-hang2">称号:{{title}}</div>
+      <div class="info-bg info-hang3">身份:{{identity}}</div>
+    </div>
+    <div class="logo">Created By Yunzai-Bot & Flower-plugin</div>
+  </div>
+</body>
+
 </html>
