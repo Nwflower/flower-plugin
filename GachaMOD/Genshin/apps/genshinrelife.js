@@ -67,6 +67,9 @@ export class genshinrelife extends plugin {
       saveId: 'genshinrelife',
       imgType: 'png',
       ...data,
+      nickname: e.sender?.nickname,
+      userId: e.user_id,
+      userIcon: `http://q2.qlogo.cn/headimg_dl?dst_uin=${e.user_id}&spec=5`,
       identity,
       color,
       imgs: char.getImgs()
