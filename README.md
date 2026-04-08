@@ -55,7 +55,7 @@ git clone --depth=1 https://gitee.com/Nwflower/flower-plugin.git ./plugins/flowe
 
 当然，你也可以使用QQ群组功能反馈。**点击加入[FLOWER插件交流群](https://qm.qq.com/cgi-bin/qm/qr?k=XOTZhBWpv68F1sfsMIzKJpg28NBPKJgg&jump_from=webapi&authKey=/XagQoLiUhOi+t67MCkWOSRLlXe+ywVmrkCHdoD3CjwqNzAUYspTrqYklkwb3W0R)**。
 
-如果你觉得本插件还行，不妨给个star或者[爱发电](https://afdian.net/a/Nwflower)，你的支持不会获得额外内容，但会提高本项目的更新积极性
+如果你觉得本插件还行，不妨给个star或者[爱发电](https://ifdian.net/a/Nwflower)，你的支持不会获得额外内容，但会提高本项目的更新积极性
 
 ### 鸣谢
 
