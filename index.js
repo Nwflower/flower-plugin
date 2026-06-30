@@ -42,7 +42,7 @@ for (let sync of syncFiles) {
     .filter((file) => file.endsWith('.js'))
   for (let file of files) {
     let name = file.replace('.js', '')
-    apps[name] = (await import(`./GachaMOD/${sync}/apps/${file}`))[name]
+    apps[`${sync}_${name}`] = (await import(`./GachaMOD/${sync}/apps/${file}`))[name]
   }
 }
 
